@@ -1,7 +1,7 @@
 import { Flex, Heading, Img } from "@chakra-ui/react";
 import Link from "next/link";
 import { useAccount } from "wagmi";
-import { ConnectButtonCustom } from "./connectButtonCustom";
+import { ConnectButtonCustom } from "./ConnectButtonCustom";
 
 export interface INavbarProps {}
 
@@ -25,7 +25,7 @@ export function Navbar(props: INavbarProps) {
           </Heading>
         </Flex>
         <Flex mr={8} alignItems="center">
-          <ConnectButtonCustom />
+          <ConnectButtonCustom title="Connect" />
         </Flex>
       </Flex>
     </>
