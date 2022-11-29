@@ -3,7 +3,9 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { IoPersonOutline } from "react-icons/io5";
 import "@fontsource/plus-jakarta-sans";
 
-export interface IConnectButtonCustomProps {}
+export interface IConnectButtonCustomProps {
+  title: string;
+}
 
 export function ConnectButtonCustom(props: IConnectButtonCustomProps) {
   return (
@@ -11,7 +13,6 @@ export function ConnectButtonCustom(props: IConnectButtonCustomProps) {
       style={{
         display: "flex",
         justifyContent: "flex-end",
-        padding: 12,
       }}
     >
       <ConnectButton.Custom>
@@ -24,7 +25,7 @@ export function ConnectButtonCustom(props: IConnectButtonCustomProps) {
           mounted,
         }) => {
           return (
-            <div
+            <Box
               {...(!mounted && {
                 "aria-hidden": true,
                 style: {
@@ -49,15 +50,16 @@ export function ConnectButtonCustom(props: IConnectButtonCustomProps) {
                         bgGradient:
                           "linear(180deg, #7C73CC -20%, #3F31B3 133%);)",
                       }}
-                      px="0.5rem"
-                      py="0.25rem"
-                      w="9.19rem"
-                      h="3.13rem"
+                      px="0.875rem"
+                      py="1.5rem"
+                      minW="9.19rem"
+                      minH="3.13rem"
                       fontSize="1.25rem"
+                      lineHeight="1.375rem"
                       fontFamily="Plus Jakarta Sans"
                       fontWeight="800"
                     >
-                      Connect
+                      {props.title}
                     </Button>
                   );
                 }
@@ -93,7 +95,7 @@ export function ConnectButtonCustom(props: IConnectButtonCustomProps) {
                   </Button>
                 );
               })()}
-            </div>
+            </Box>
           );
         }}
       </ConnectButton.Custom>
