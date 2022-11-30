@@ -14,17 +14,17 @@ export function Navbar(props: INavbarProps) {
         alignItems="center"
         justifyContent="space-between"
         bgColor="#0C0C0D"
-        height="80px"
+        height="5rem"
       >
         <Flex flexDirection={"row"} alignItems={"center"}>
           <Link href="/">
-            <Img src="/eth.svg" alt="ethereum" ml={"20px"} />
+            <Img src="/eth.svg" alt="ethereum" ml={"5rem"} />
           </Link>
           <Heading size="md" fontFamily="Arial" color={"whiteAlpha.900"}>
             <Link href="/">wherewithETH</Link>
           </Heading>
         </Flex>
-        <Flex mr={8} alignItems="center">
+        <Flex mr="5rem" alignItems="center">
           <ConnectButtonCustom title="Connect" />
         </Flex>
       </Flex>
