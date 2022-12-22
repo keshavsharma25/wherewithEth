@@ -1,17 +1,10 @@
-import { Box } from "@chakra-ui/react";
-import { Navbar } from "../components/Navbar";
 import { useAccount } from "wagmi";
-import { LandingPage } from "../components/LandingPage";
+import { LandingPage, Navbar, Layout, Assets } from "../components";
 
 function Page() {
   const { address, isConnected } = useAccount();
 
-  return (
-    <div>
-      <Navbar />
-      <LandingPage />
-    </div>
-  );
+  return <Layout>{isConnected ? <Assets /> : <LandingPage />}</Layout>;
 }
 
 export default Page;
