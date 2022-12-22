@@ -15,6 +15,7 @@ export const client = createClient({
   connectors,
   provider,
   webSocketProvider,
+  autoConnect: true,
 });
 
 export { chains };

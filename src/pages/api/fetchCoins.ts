@@ -40,7 +40,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const coinsResponse = await (
       await fetch(
-        `https://api.covalenthq.com/v1/${req.query.chain_id}/address/${req.query.address}/balances_v2/?key=${process.env.NEXT_PUBLIC_COVALENT_API_KEY}/?quote-currency=${req.query.quote_currency}`,
+        `https://api.covalenthq.com/v1/1/address/${req.query.address}/balances_v2/?key=${process.env.NEXT_PUBLIC_COVALENT_API_KEY}`,
+        // `https://api.covalenthq.com/v1/${req.query.chain_id}/address/${req.query.address}/balances_v2/?key=${process.env.NEXT_PUBLIC_COVALENT_API_KEY}/?quote-currency=${req.query.quote_currency}`,
         { headers }
       )
     ).json();
