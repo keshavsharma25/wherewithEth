@@ -1,33 +1,32 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import * as React from "react";
+import React, { useContext } from "react";
 import Identicon from "react-blockies";
-import { useAccount, useEnsName } from "wagmi";
+import { userDetailContext } from "../Assets";
 
-export interface IBlockiesProps {}
+export interface IBlockiesProps {
+  isLoading: boolean;
+}
 
-export function Blockies(props: IBlockiesProps) {
-  const { address } = useAccount();
-  const addressExp = address?.substring(0, 5) + ".." + address?.substring(40);
-  const {
-    data: ens,
-    isError,
-    isLoading,
-  } = useEnsName({
-    address: address,
-    chainId: 1,
-  });
-  React.useEffect(() => {
-    console.log(ens);
-  }, [ens, isLoading]);
+export function Blockies({ isLoading }: IBlockiesProps) {
+  const userData = useContext(userDetailContext);
+
+  const addressExp =
+    userData!.address?.substring(0, 5) +
+    ".." +
+    userData!.address?.substring(40);
 
   return (
     <Flex justifyContent="flex-start" alignItems="center" gap={5}>
       <Box borderRadius="full" overflow="hidden" width="6.8rem" height="6.8rem">
-        <Identicon seed={address! as string} size={11} scale={10} />
+        <Identicon seed={userData!.address! as string} size={11} scale={10} />
       </Box>
       <Box>
         <Heading color="white" fontSize="1.3rem" fontWeight="bold">
-          {isLoading ? addressExp : ens ? ens : addressExp}
+          {isLoading
+            ? addressExp
+            : userData!.ensName
+            ? userData!.ensName
+            : addressExp}
         </Heading>
         <Text color="#647087" fontSize="1rem" fontWeight="normal">
           {addressExp}

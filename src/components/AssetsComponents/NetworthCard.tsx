@@ -17,7 +17,7 @@ export function NetworthCard({ balance }: INetworthCardProps) {
       paddingLeft="1.5rem"
       paddingY="0.5rem"
       borderRadius="0.5rem"
-      paddingRight="3rem"
+      paddingRight="10rem"
     >
       <IoIosWallet size="2.5rem" color="white" />
       <Flex direction="column" gap="0.25rem">
