@@ -14,52 +14,29 @@ export function Assets(props: IAssetsProps) {
 
   const { address, isConnected } = useAccount();
 
-  const {
-    data: ens,
-    isLoading: ensLoading,
-    isError: ensError,
-  } = useEnsName({
-    address: address,
-    chainId: 1,
-  });
-
-  // useEffect(() => {
-  //   if (isConnected && address) {
-  //     setUserDetails({ ...userDetails, address: address });
-  //   }
-  // }, [isConnected, address, userDetails.address]);
-
-  useEffect(() => {
-    if (isConnected && !ensLoading) {
-      setUserDetails({ ...userDetails, ensName: ens! });
-    }
-  }, [ens, ensLoading, userDetails.ensName]);
-
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await fetch(
-        `./api/fetchCoins/?address=${address}&chainId=1&quote-currency=USD`
-      );
-      const data = await res.json();
+      const res = await fetch(`./api/fetchCoins/?address=${address}`);
+      const data: UserAssets = await res.json();
+      console.log("fetch balance is running", data.total_balance);
 
       setUserDetails({
-        ...userDetails,
-        balance: data.total_balance,
-        address: data.address,
+        ...userDetails!,
+        total_balance: data?.total_balance,
       });
     };
     fetchBalance();
-  }, [address, userDetails.balance]);
+  }, [address, userDetails?.total_balance]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
       <Box paddingX="2rem" pt="5rem">
         <Flex justifyContent="space-between" alignItems="center">
-          <Blockies isLoading={ensLoading} />
+          <Blockies />
           <NetworthCard
             balance={
-              userDetails.balance.toFixed(2))
-                ? Number(userDetails.balance.toFixed(2))
+              userDetails?.total_balance
+                ? Number(userDetails.total_balance.toFixed(2))
                 : 0
             }
           />
