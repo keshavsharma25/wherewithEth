@@ -28,6 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     let coinsData = [];
     let totalBalance = 0;
+    let userAssets: UserAssets;
 
     if (coinsResponse.error) {
       return res.status(coinsResponse.error_code).json(coinsResponse);
@@ -74,7 +75,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         } as CoinItem);
       }
 
-      let userAssets: UserAssets = {
+      userAssets = {
         address: coinsResponse.data.address,
         updated_at: coinsResponse.data.updated_at,
         quote_currency: coinsResponse.data.quote_currency,
@@ -83,7 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         items: coinsData,
       };
     } else {
-      let userAssets: UserAssets = {
+      userAssets = {
         address: coinsResponse.data.address,
         updated_at: coinsResponse.data.updated_at,
         quote_currency: coinsResponse.data.quote_currency,
@@ -93,7 +94,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       };
     }
 
-    return res.status(200).json(coinsResponse);
+    return res.status(200).json(userAssets);
   } catch (error) {}
 };
 
