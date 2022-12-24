@@ -3,23 +3,14 @@ import React, { useEffect, useState, createContext } from "react";
 import { Blockies, NetworthCard } from "./AssetsComponents";
 import { useAccount, useEnsName } from "wagmi";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
+import { UserAssets } from "../utils";
 
 export interface IAssetsProps {}
 
-type UserDetailType = {
-  address: string;
-  balance: number;
-  ensName?: string;
-};
-
-export const userDetailContext = createContext<UserDetailType | null>(null);
+export const userDetailContext = createContext<UserAssets | null>(null);
 
 export function Assets(props: IAssetsProps) {
-  const [userDetails, setUserDetails] = useState<UserDetailType>({
-    address: "",
-    balance: 0,
-    ensName: "",
-  });
+  const [userDetails, setUserDetails] = useState<UserAssets | null>(null);
 
   const { address, isConnected } = useAccount();
 
@@ -50,6 +41,7 @@ export function Assets(props: IAssetsProps) {
         `./api/fetchCoins/?address=${address}&chainId=1&quote-currency=USD`
       );
       const data = await res.json();
+
       setUserDetails({
         ...userDetails,
         balance: data.total_balance,
@@ -66,7 +58,7 @@ export function Assets(props: IAssetsProps) {
           <Blockies isLoading={ensLoading} />
           <NetworthCard
             balance={
-              Number(userDetails.balance.toFixed(2))
+              userDetails.balance.toFixed(2))
                 ? Number(userDetails.balance.toFixed(2))
                 : 0
             }
