@@ -35,9 +35,9 @@ export const CoinsCard = () => {
           {userData?.items.map((user, index) => (
             <CoinInnerCard
               key={index}
-              name={user.contract_name}
+              name={user.contract_ticker_symbol}
               image={user.logo_url}
-              incrasePercentage={user.quote_percent_change_24h}
+              incrasePercentage={user.quote_rate_percent_change_24h}
               quantity={Number(
                 (Number(user.balance) / Math.pow(10, 18)).toFixed(3)
               )}

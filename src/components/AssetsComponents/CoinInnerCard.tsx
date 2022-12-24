@@ -43,7 +43,7 @@ export default function CoinInnerCard({
           </Heading>
           <Flex justifyContent="center" alignItems="center" gap="2">
             <Text color="#647087">$ {token_value}</Text>
-            <Text color="#35DAB2">+{incrasePercentage}</Text>
+            <Text color="#35DAB2">{incrasePercentage}</Text>
           </Flex>
         </Flex>
       </Flex>
