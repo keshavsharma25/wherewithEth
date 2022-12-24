@@ -23,6 +23,7 @@ export function Assets(props: IAssetsProps) {
       setUserDetails({
         ...userDetails!,
         total_balance: data?.total_balance,
+        items: data?.items,
       });
     };
     fetchBalance();
@@ -41,7 +42,7 @@ export function Assets(props: IAssetsProps) {
             }
           />
         </Flex>
-        <Flex>
+        <Flex mt={10}>
           <CoinsCard />
         </Flex>
       </Box>

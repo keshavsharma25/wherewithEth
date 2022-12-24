@@ -19,25 +19,36 @@ export default function CoinInnerCard({
   value,
 }: ICoinInnerCardProps) {
   return (
-    <Flex justifyContent="center" alignItems="center" gap="5">
-      <Box>
-        <Image height="16" width="16" src={image} />
-      </Box>
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        gap="2"
-      >
-        <Heading color="white" fontSize="1.2rem">
-          {name}
-        </Heading>
-        <Flex justifyContent="center" alignItems="center" gap="2">
-          <Text color="#647087">$ {token_value}</Text>
-          <Text color="#35DAB2">+{incrasePercentage}</Text>
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      gap="5"
+      width="full"
+      borderBottom="1px"
+      borderBottomColor="rgba(255,255,255,0.08)"
+      pb={3}
+    >
+      <Flex justifyContent="center" gap={3}>
+        <Box>
+          <Image height="16" width="16" src={image} />
+        </Box>
+        <Flex
+          direction="column"
+          justifyContent="center"
+          alignItems="flex-start"
+          gap="2"
+        >
+          <Heading color="white" fontSize="1.2rem">
+            {name}
+          </Heading>
+          <Flex justifyContent="center" alignItems="center" gap="2">
+            <Text color="#647087">$ {token_value}</Text>
+            <Text color="#35DAB2">+{incrasePercentage}</Text>
+          </Flex>
         </Flex>
       </Flex>
-      <Flex direction="column" gap="2">
+
+      <Flex direction="column" gap="2" alignItems="flex-start">
         <Heading fontSize="1.2rem" color="white">
           {quantity}
         </Heading>

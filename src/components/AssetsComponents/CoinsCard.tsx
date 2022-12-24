@@ -1,9 +1,14 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BsBarChartFill } from "react-icons/bs";
 import CoinInnerCard from "./CoinInnerCard";
+import { userDetailContext } from "../Assets";
 
 export const CoinsCard = () => {
+  const userData = useContext(userDetailContext);
+  useEffect(() => {
+    console.log("User data is", userData?.items);
+  }, [userData?.items]);
   return (
     <Flex
       justifyContent="center"
@@ -11,6 +16,9 @@ export const CoinsCard = () => {
       direction="column"
       width="full"
       gap="5"
+      bg="#1B1D30"
+      p="2.25rem"
+      borderRadius="12px"
     >
       <Flex justifyContent="center" alignItems="center" gap="2">
         <BsBarChartFill size="24" color="white" />{" "}
@@ -23,7 +31,21 @@ export const CoinsCard = () => {
           <Text color="#647087">CURRENCY</Text>
           <Text color="#647087">QTY</Text>
         </Flex>
-        <Flex></Flex>
+        <Flex mt={10} direction="column" gap={5}>
+          {userData?.items.map((user, index) => (
+            <CoinInnerCard
+              key={index}
+              name={user.contract_name}
+              image={user.logo_url}
+              incrasePercentage={user.quote_percent_change_24h}
+              quantity={Number(
+                (Number(user.balance) / Math.pow(10, 18)).toFixed(3)
+              )}
+              token_value={user.quote_rate}
+              value={Number(user.quote.toFixed(2))}
+            />
+          ))}
+        </Flex>
       </Flex>
     </Flex>
   );
