@@ -31,7 +31,7 @@ export function Assets(props: IAssetsProps) {
 
   return (
     <userDetailContext.Provider value={userDetails}>
-      <Box paddingX="2rem" pt="5rem">
+      <Box paddingX="2rem" pt="5rem" minHeight="100vh">
         <Flex justifyContent="space-between" alignItems="center">
           <Blockies />
           <NetworthCard

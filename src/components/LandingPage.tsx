@@ -102,7 +102,7 @@ export function LandingPage(props: ILandingPageProps) {
           </AspectRatio>
         </Flex>
       </Flex>
-      <Box pt="13.25rem" ml="7.5rem">
+      {/* <Box pt="13.25rem" ml="7.5rem">
         <Heading
           fontSize="2rem"
           lineHeight="3rem"
@@ -122,7 +122,7 @@ export function LandingPage(props: ILandingPageProps) {
             thumbnail="https://i.pinimg.com/736x/af/44/ea/af44ea07fa5bfd828004747f62f63bc3.jpg"
           />
         </Flex>
-      </Box>
+      </Box> */}
     </>
   );
 }
