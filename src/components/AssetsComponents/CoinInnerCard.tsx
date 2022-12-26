@@ -48,7 +48,7 @@ export default function CoinInnerCard({
         </Flex>
       </Flex>
 
-      <Flex direction="column" gap="2" alignItems="flex-start">
+      <Flex direction="column" gap="2" alignItems="flex-end">
         <Heading fontSize="1.2rem" color="white">
           {quantity}
         </Heading>

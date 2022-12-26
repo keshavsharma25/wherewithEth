@@ -39,9 +39,11 @@ export const CoinsCard = () => {
               image={user.logo_url}
               incrasePercentage={user.quote_rate_percent_change_24h}
               quantity={Number(
-                (Number(user.balance) / Math.pow(10, 18)).toFixed(3)
+                (
+                  Number(user.balance) / Math.pow(10, user.contract_decimals)
+                ).toFixed(3)
               )}
-              token_value={user.quote_rate}
+              token_value={user.quote_rate ? user.quote_rate : 0}
               value={Number(user.quote.toFixed(2))}
             />
           ))}
