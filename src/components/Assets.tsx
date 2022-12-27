@@ -3,21 +3,21 @@ import React, { useEffect, useState, createContext } from "react";
 import { Blockies, NetworthCard } from "./AssetsComponents";
 import { useAccount, useEnsName } from "wagmi";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
-import { UserAssets } from "../utils";
+import { Assets } from "../types";
 
 export interface IAssetsProps {}
 
-export const userDetailContext = createContext<UserAssets | null>(null);
+export const userDetailContext = createContext<Assets | null>(null);
 
 export function Assets(props: IAssetsProps) {
-  const [userDetails, setUserDetails] = useState<UserAssets | null>(null);
+  const [userDetails, setUserDetails] = useState<Assets | null>(null);
 
   const { address, isConnected } = useAccount();
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await fetch(`./api/fetchCoins/?address=${address}`);
-      const data: UserAssets = await res.json();
+      const res = await fetch(`./api/fetchCoinsM/?address=${address}`);
+      const data = await res.json();
       console.log("fetch balance is running", data.total_balance);
 
       setUserDetails({
