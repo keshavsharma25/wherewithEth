@@ -133,7 +133,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         }
 
-        tokens.push(nativeBalance);
+        tokens.unshift(nativeBalance);
       }
 
       const data: Assets = {
