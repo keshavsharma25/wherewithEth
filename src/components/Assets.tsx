@@ -27,7 +27,7 @@ export function Assets(props: IAssetsProps) {
       });
     };
     fetchBalance();
-  }, [address, userDetails?.total_balance]);
+  }, [address]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
