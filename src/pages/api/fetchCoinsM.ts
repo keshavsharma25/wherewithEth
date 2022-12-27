@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
-import { TypeScriptConfig } from "next/dist/server/config-shared";
 import { Token, Assets } from "../../types";
 
 const start = async () => {
