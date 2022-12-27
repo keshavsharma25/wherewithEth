@@ -37,7 +37,7 @@ export function Assets(props: IAssetsProps) {
           <NetworthCard
             balance={
               userDetails?.total_balance
-                ? Number(userDetails.total_balance.toFixed(2))
+                ? Number(userDetails.total_balance?.toFixed(2))
                 : 0
             }
           />
