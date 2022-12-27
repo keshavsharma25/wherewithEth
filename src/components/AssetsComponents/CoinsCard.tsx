@@ -40,10 +40,10 @@ export const CoinsCard = () => {
               image={user.logo}
               incrasePercentage={0}
               quantity={Number(
-                (Number(user.balance) / Math.pow(10, user.decimals)).toFixed(3)
+                (Number(user.balance) / Math.pow(10, user.decimals))?.toFixed(3)
               )}
               token_value={user.quote_rate ? user.quote_rate : 0}
-              value={Number(user.quote.toFixed(2))}
+              value={Number(user.quote?.toFixed(2))}
             />
           ))}
         </Flex>
