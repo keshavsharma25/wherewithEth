@@ -2,7 +2,7 @@ import { Box, Flex, Image, Text, Heading } from "@chakra-ui/react";
 import * as React from "react";
 
 export interface ICoinInnerCardProps {
-  image: string;
+  image: string | null;
   name: string;
   token_value: number;
   incrasePercentage: number;
@@ -30,7 +30,7 @@ export default function CoinInnerCard({
     >
       <Flex justifyContent="center" gap={3}>
         <Box>
-          <Image height="16" width="16" src={image} />
+          <Image height="16" width="16" src={image} alt={"Logo"} />
         </Box>
         <Flex
           direction="column"
@@ -42,8 +42,8 @@ export default function CoinInnerCard({
             {name}
           </Heading>
           <Flex justifyContent="center" alignItems="center" gap="2">
-            <Text color="#647087">$ {token_value}</Text>
-            <Text color="#35DAB2">{incrasePercentage}</Text>
+            <Text color="#647087">$ {token_value.toFixed(4)}</Text>
+            {/* <Text color="#35DAB2">{incrasePercentage}</Text> */}
           </Flex>
         </Flex>
       </Flex>
