@@ -1,7 +1,8 @@
 import { Box, Flex, Image, Text, Heading } from "@chakra-ui/react";
 import * as React from "react";
-
+import Identicon from "react-blockies";
 export interface ICoinInnerCardProps {
+  address: string;
   image: string | null;
   name: string;
   token_value: number;
@@ -11,6 +12,7 @@ export interface ICoinInnerCardProps {
 }
 
 export default function CoinInnerCard({
+  address,
   image,
   name,
   token_value,
@@ -30,7 +32,25 @@ export default function CoinInnerCard({
     >
       <Flex justifyContent="center" gap={3}>
         <Box>
-          <Image height="16" width="16" src={image} alt={"Logo"} />
+          {image ? (
+            <Image height="16" width="16" src={image} alt={"Logo"} />
+          ) : name === "Ether" ? (
+            <Image
+              height="16"
+              width="16"
+              src={`https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880`}
+              alt={"Logo"}
+            />
+          ) : (
+            <Box
+              borderRadius="full"
+              overflow="hidden"
+              width="3rem"
+              height="3rem"
+            >
+              <Identicon seed={address as string} size={11} scale={18} />
+            </Box>
+          )}
         </Box>
         <Flex
           direction="column"
