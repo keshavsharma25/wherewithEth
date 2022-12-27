@@ -34,6 +34,7 @@ export const CoinsCard = () => {
         <Flex mt={10} direction="column" gap={5}>
           {userData?.items.map((user, index) => (
             <CoinInnerCard
+              address={user.name}
               key={index}
               name={user.name}
               image={user.logo}
