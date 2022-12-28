@@ -118,6 +118,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const nativeBalance = await getNativePrice(tempNativeBalance);
 
+      totalBalance += nativeBalance.quote;
+
       if (tokens) {
         for (let i = 0; i < tokens.length; i++) {
           tokens[i].quote_rate = (
