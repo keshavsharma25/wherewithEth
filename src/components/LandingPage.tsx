@@ -85,15 +85,18 @@ export function LandingPage(props: ILandingPageProps) {
                 pt="2.31rem"
                 pb="3rem"
               >
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est
-                veritatis rerum ad pariatur. Odio, totam. Facilis, cumque ullam
-                nemo magni aspernatur temporibus ab iusto voluptates et iste
-                fugiat. Optio, quisquam?
+                WherewithEth is a platform that allows users to track and manage
+                their EVM-related assets in real time. It is inspired by the
+                word &quot;wherewithal&quot; which refers to the resources or
+                means necessary to do something. With wherewithEth, users can
+                easily view the status of their EVM-based wallet&apos;s asset
+                portfolio and make informed decisions about their financial
+                situation and their assets.
               </Text>
               <ConnectButtonCustom title="Connect Wallet" />
             </VStack>
           </Box>
-          <AspectRatio minW="23.87rem" minH="22.5rem">
+          <AspectRatio minW="25rem" minH="22.5rem">
             <Image
               src="netWorthTxnNFT.png"
               alt="netWorthTxnNFT"

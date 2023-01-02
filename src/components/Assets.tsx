@@ -27,7 +27,7 @@ export function Assets(props: IAssetsProps) {
       });
     };
     fetchBalance();
-  }, [address, userDetails?.total_balance]);
+  }, [address]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
@@ -37,7 +37,7 @@ export function Assets(props: IAssetsProps) {
           <NetworthCard
             balance={
               userDetails?.total_balance
-                ? Number(userDetails.total_balance.toFixed(2))
+                ? Number(userDetails.total_balance?.toFixed(2))
                 : 0
             }
           />

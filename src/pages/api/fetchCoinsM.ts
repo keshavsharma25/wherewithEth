@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
-import { TypeScriptConfig } from "next/dist/server/config-shared";
 import { Token, Assets } from "../../types";
 
 const start = async () => {
@@ -119,19 +118,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const nativeBalance = await getNativePrice(tempNativeBalance);
 
-      for (let i = 0; i < tokens.length; i++) {
-        tokens[i].quote_rate = (
-          await getTokenPrice(tokens[i].token_address)
-        ).usdPrice;
-        tokens[i].quote =
-          (tokens[i].quote_rate * tokens[i].balance) / 10 ** tokens[i].decimals;
+      totalBalance += nativeBalance.quote;
 
-        if (tokens[i].quote_rate) {
-          totalBalance += tokens[i].quote;
+      if (tokens) {
+        for (let i = 0; i < tokens.length; i++) {
+          tokens[i].quote_rate = (
+            await getTokenPrice(tokens[i].token_address)
+          ).usdPrice;
+          tokens[i].quote =
+            (tokens[i].quote_rate * tokens[i].balance) /
+            10 ** tokens[i].decimals;
+
+          if (tokens[i].quote_rate) {
+            totalBalance += tokens[i].quote;
+          }
         }
-      }
 
-      tokens.unshift(nativeBalance);
+        tokens.unshift(nativeBalance);
+      }
 
       const data: Assets = {
         address: req.query.address,
