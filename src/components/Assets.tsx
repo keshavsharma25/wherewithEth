@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState, createContext } from "react";
-import { Blockies, NetworthCard } from "./AssetsComponents";
+import { Blockies, NetworthCard, NftCard } from "./AssetsComponents";
 import { useAccount, useEnsName } from "wagmi";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
 import { Assets } from "../types";

@@ -56,13 +56,13 @@ export function LandingPage(props: ILandingPageProps) {
             lg: "row",
             md: "column",
           }}
-          w="74.68rem"
+          maxW="74.68rem"
           pt="15.18rem"
           justifyContent="space-between"
         >
-          <Box maxW="46.625rem" w="46.625rem" pt="2.25rem" pr="4.19rem">
-            <VStack alignItems="flex-start">
-              <Flex flexDirection="row" alignItems="center" position="relative">
+          <Box pt="2.25rem">
+            <VStack alignItems={{ md: "center", lg: "flex-start" }}>
+              <Flex alignItems="center" position="relative">
                 <Image
                   src="eth.svg"
                   alt="ethlogo"
@@ -76,7 +76,7 @@ export function LandingPage(props: ILandingPageProps) {
                 />
                 <Heading
                   color="white"
-                  fontSize="2rem"
+                  fontSize={{ md: "2rem", lg: "1.8rem" }}
                   fontFamily=""
                   lineHeight="3rem"
                   fontWeight="800"
@@ -86,12 +86,14 @@ export function LandingPage(props: ILandingPageProps) {
               </Flex>
               <Text
                 color="#9A9AB7"
-                maxW="42.68rem"
+                maxW={{ lg: "40rem", xl: "42.68rem" }}
                 fontFamily="DM Sans"
                 fontWeight="400"
                 lineHeight="1.75rem"
+                textAlign={{ md: "center", lg: "left" }}
                 pt="2.31rem"
                 pb="3rem"
+                px={{ base: "10", lg: "0" }}
               >
                 WherewithEth is a platform that allows users to track and manage
                 their EVM-related assets in real time. It is inspired by the
@@ -104,13 +106,30 @@ export function LandingPage(props: ILandingPageProps) {
               <ConnectButtonCustom title="Connect Wallet" />
             </VStack>
           </Box>
-          <AspectRatio minW="25rem" minH="22.5rem">
+          <Box
+            w={{ md: "30rem", lg: "20rem" }}
+            display={{ base: "none", lg: "block" }}
+            marginX={{ md: "auto", lg: 0 }}
+          >
             <Image
+              w="full"
+              h="full"
               src="netWorthTxnNFT.png"
               alt="netWorthTxnNFT"
-              objectFit="contain"
             />
-          </AspectRatio>
+          </Box>
+          <Flex
+            display={{ base: "flex", lg: "none" }}
+            mt="10"
+            flexDir="column"
+            alignItems="center"
+            justifyContent="center"
+            gap="5"
+          >
+            <Image marginX="auto" w="80" h="full" src="newWorthIcon.png" />
+            <Image marginX="auto" w="80" h="full" src="NFTIcon.png" />
+            <Image marginX="auto" w="80" h="full" src="TransactionIcon.png" />
+          </Flex>
         </Flex>
       </Flex>
 
