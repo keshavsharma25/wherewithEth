@@ -16,7 +16,7 @@ export function Assets(props: IAssetsProps) {
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await fetch(`./api/fetchCoinsM/?address=${address}`);
+      const res = await fetch(`./api/retrieving-coins/?address=${address}`);
       const data = await res.json();
       console.log("fetch balance is running", data.total_balance);
 
