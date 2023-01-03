@@ -19,10 +19,11 @@ export function LandingPage(props: ILandingPageProps) {
     <>
       <Flex flexDirection="column" alignItems="center" justifyContent="center">
         <Heading
-          fontSize="4rem"
+          fontSize={["2rem", "2.5rem", "3rem", "3.5rem", "4rem"]}
           color="white"
           textAlign={"center"}
           pt="6.75rem"
+          px={["1.5rem", "2rem", "2.5rem", "3rem", "3.5rem"]}
           pb="2.81rem"
           letterSpacing="0.2rem"
         >
@@ -30,18 +31,25 @@ export function LandingPage(props: ILandingPageProps) {
         </Heading>
         <Text
           color="#9A9AB7"
-          fontSize="1.25rem"
+          fontSize={["0.9rem", "1rem", "1.10rem", "1.25rem", "1.5rem"]}
+          px={["1.5rem", "2rem", "2.5rem", "3rem", "3.5rem"]}
           fontFamily="DM Sans"
           fontWeight="400"
+          textAlign={"center"}
         >
           Never before has it been so easy to keep track of your wallet&apos;s
           assets.
         </Text>
         <Box pt="5.5rem">
-          <AspectRatio w="64rem" h="36.5rem" ratio={4 / 3}>
+          <AspectRatio
+            w={["19.2rem", "25.6rem", "38.4rem", "51.2rem", "64rem"]}
+            h={["10.95rem", "14.6rem", "21.9rem", "29.2rem", "36.5rem"]}
+            ratio={4 / 3}
+          >
             <Image src="./mockup.png" alt="mockup" objectFit="inherit" />
           </AspectRatio>
         </Box>
+
         <Flex
           flexDirection={{
             base: "row",
@@ -105,6 +113,7 @@ export function LandingPage(props: ILandingPageProps) {
           </AspectRatio>
         </Flex>
       </Flex>
+
       {/* <Box pt="13.25rem" ml="7.5rem">
         <Heading
           fontSize="2rem"
@@ -129,3 +138,6 @@ export function LandingPage(props: ILandingPageProps) {
     </>
   );
 }
+
+//   );
+// }
