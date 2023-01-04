@@ -3,11 +3,9 @@ import type { NftContract } from "alchemy-sdk/dist/src/api/nft";
 import type {
   Media,
   NftMetadata,
-  OwnedNft,
   OwnedNftsResponse,
 } from "alchemy-sdk/dist/src/types/types";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { chain } from "wagmi";
 
 interface NftInformation {
   contract: NftContract;
