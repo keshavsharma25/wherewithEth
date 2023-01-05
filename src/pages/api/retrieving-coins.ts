@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
-import { Token, Assets } from "../../types";
+import { Token, Assets } from "../../utils/types";
 
 const start = async () => {
   try {
