@@ -50,21 +50,24 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
         }}
       >
         {userNfts?.ownedNfts ? (
-          userNfts?.ownedNfts?.map((nft: any, index: number) => (
-            <NftCard
-              key={index}
-              chainName={userNfts?.chain}
-              imageFormat={nft?.media[0].format}
-              image={
-                nft?.media[0].format === "svg+xml"
-                  ? nft?.media[0]?.thumbnail
-                  : nft?.media[0]?.raw
-              }
-              name={nft?.title}
-              price={nft?.contractMetadata?.openSea?.floorPrice}
-              tokenId={nft?.contract?.address}
-            />
-          ))
+          userNfts?.ownedNfts?.map(
+            (nft: any, index: number) =>
+              nft.media[0].raw !== "" && (
+                <NftCard
+                  key={index}
+                  chainName={userNfts?.chain}
+                  imageFormat={nft?.media[0].format}
+                  image={
+                    nft?.media[0]?.format === "svg+xml"
+                      ? nft?.media[0]?.thumbnail
+                      : nft?.media[0]?.raw
+                  }
+                  name={nft?.title}
+                  price={nft?.contractMetadata?.openSea?.floorPrice}
+                  tokenId={nft?.contract?.address}
+                />
+              )
+          )
         ) : (
           <Text color="white" fontSize="1.5rem" mx="auto" fontWeight="bold">
             No Nft found
