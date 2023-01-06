@@ -1,9 +1,15 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState, createContext } from "react";
-import { Blockies, NetworthCard, NftCard, NftBlock } from "./AssetsComponents";
+import {
+  Blockies,
+  NetworthCard,
+  NftCard,
+  NftBlock,
+  Transactions,
+} from "./AssetsComponents";
 import { useAccount, useEnsName } from "wagmi";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
-import { Assets } from "../utils/types";
+import { Assets, chains } from "../utils/types";
 
 export interface IAssetsProps {}
 
@@ -12,7 +18,8 @@ export const userDetailContext = createContext<any | null>(null);
 export function Assets(props: IAssetsProps) {
   const [userDetails, setUserDetails] = useState<Assets | null>(null);
   const [userNfts, setUserNfts] = useState<any>(null);
-  const [chain, setChain] = useState("matic-mainnet");
+  const [chain, setChain] = useState<chains>("eth-mainnet");
+  const [transactions, setTransactions] = useState<any>(null);
 
   const { address, isConnected } = useAccount();
 
@@ -43,8 +50,19 @@ export function Assets(props: IAssetsProps) {
   }, [address, chain]);
 
   useEffect(() => {
-    console.log("userNfts", userNfts);
-  }, [userNfts]);
+    const fetchTransactions = async () => {
+      const res = await fetch(
+        `./api/retrieving-txns/?address=${address}&chain=${chain}&page=1&limit=10&category=erc20`
+      );
+      const data = await res.json();
+      setTransactions(data);
+    };
+    fetchTransactions();
+  }, [chain, address]);
+
+  useEffect(() => {
+    console.log("user Txns", transactions);
+  }, [address, transactions]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
@@ -63,6 +81,7 @@ export function Assets(props: IAssetsProps) {
           <CoinsCard />
         </Flex>
         <NftBlock setChain={setChain} userNfts={userNfts} />
+        <Transactions data={transactions?.result} />
       </Box>
     </userDetailContext.Provider>
   );

@@ -32,7 +32,7 @@ export const CoinsCard = () => {
           <Text color="#647087">QTY</Text>
         </Flex>
         <Flex mt={10} direction="column" gap={5}>
-          {userData?.items?.map((user, index) => (
+          {userData?.items?.map((user: any, index: number) => (
             <CoinInnerCard
               address={user.name}
               key={index}
