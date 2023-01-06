@@ -85,7 +85,6 @@ export function Assets(props: IAssetsProps) {
         <NftBlock setChain={setNftChain} userNfts={userNfts} />
         <Transactions
           setTxnsType={setTxnsType}
-          chain={txnsChain}
           setChain={setTxnsChain}
           data={transactions?.result}
         />

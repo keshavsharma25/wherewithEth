@@ -11,20 +11,19 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
 export const Transactions = ({
   data,
   setChain,
-  chain,
   setTxnsType,
 }: {
   data: any;
   setChain: (e: any) => void;
-  chain: string;
   setTxnsType: (e: any) => void;
 }) => {
   const router = useRouter();
+  const selectedChainref = useRef<HTMLSelectElement>(null);
 
   const chainHandler = (e: any) => {
     setChain(e.target.value);
@@ -50,7 +49,12 @@ export const Transactions = ({
             <option value="erc721">erc-721</option>
             <option value="erc1155">erc-1155</option>
           </Select>
-          <Select onChange={(e) => chainHandler(e)} color="white" w="max">
+          <Select
+            ref={selectedChainref}
+            onChange={(e) => chainHandler(e)}
+            color="white"
+            w="max"
+          >
             <option defaultChecked value="eth-mainnet">
               Ethereum
             </option>
@@ -84,7 +88,7 @@ export const Transactions = ({
                 <Td
                   onClick={() =>
                     router.push(
-                      chain === "matic-mainnet"
+                      selectedChainref.current?.value === "matic-mainnet"
                         ? `https://polygonscan.com/tx/${item.hash}`
                         : `https://etherscan.io/tx/${item.hash}`
                     )
