@@ -21,6 +21,7 @@ export function Assets(props: IAssetsProps) {
   const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
   const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
   const [transactions, setTransactions] = useState<any>(null);
+  const [txnsType, setTxnsType] = useState("erc20");
 
   const { address, isConnected } = useAccount();
 
@@ -53,17 +54,17 @@ export function Assets(props: IAssetsProps) {
   useEffect(() => {
     const fetchTransactions = async () => {
       const res = await fetch(
-        `./api/retrieving-txns/?address=${address}&chain=${txnsChain}&page=1&limit=10&category=erc20`
+        `./api/retrieving-txns/?address=${address}&chain=${txnsChain}&page=1&limit=10&category=${txnsType}`
       );
       const data = await res.json();
       setTransactions(data);
     };
     fetchTransactions();
-  }, [txnsChain, address]);
+  }, [txnsChain, address, txnsType]);
 
   useEffect(() => {
-    console.log("user Nfts", userNfts);
-  }, [address, userNfts]);
+    console.log("user txns", transactions);
+  }, [address, transactions]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
@@ -83,6 +84,7 @@ export function Assets(props: IAssetsProps) {
         </Flex>
         <NftBlock setChain={setNftChain} userNfts={userNfts} />
         <Transactions
+          setTxnsType={setTxnsType}
           chain={txnsChain}
           setChain={setTxnsChain}
           data={transactions?.result}

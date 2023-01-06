@@ -49,7 +49,7 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
           },
         }}
       >
-        {userNfts?.ownedNfts ? (
+        {userNfts?.ownedNfts.length > 0 ? (
           userNfts?.ownedNfts?.map(
             (nft: any, index: number) =>
               nft.media[0].raw !== "" && (

@@ -17,15 +17,21 @@ export const Transactions = ({
   data,
   setChain,
   chain,
+  setTxnsType,
 }: {
   data: any;
   setChain: (e: any) => void;
   chain: string;
+  setTxnsType: (e: any) => void;
 }) => {
   const router = useRouter();
 
   const chainHandler = (e: any) => {
     setChain(e.target.value);
+  };
+
+  const txnsTypeHandler = (e: any) => {
+    setTxnsType(e.target.value);
   };
 
   return (
@@ -34,7 +40,16 @@ export const Transactions = ({
         <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
           Transactions
         </Text>
-        <Box float="right">
+        <Flex float="right" gap={5}>
+          <Select onChange={(e) => txnsTypeHandler(e)} color="white" w="max">
+            <option defaultChecked value="erc20">
+              erc-20
+            </option>
+            <option value="normal">Normal</option>
+
+            <option value="erc721">erc-721</option>
+            <option value="erc1155">erc-1155</option>
+          </Select>
           <Select onChange={(e) => chainHandler(e)} color="white" w="max">
             <option defaultChecked value="eth-mainnet">
               Ethereum
@@ -43,7 +58,7 @@ export const Transactions = ({
             <option value="opt-mainnet">Optimism</option>
             <option value="arb-mainnet">Arbitrum</option>
           </Select>
-        </Box>
+        </Flex>
       </Flex>
       <Table bg="#1B1D30" p={2} mt={5} borderRadius="12px">
         <Thead>
