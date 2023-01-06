@@ -14,16 +14,22 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
 
   return (
     <Box bg="#1B1D30" mt={10} borderRadius="12px" p={5}>
-      <Box mb={5}>
-        <Select onChange={(e) => chainHadler(e)} color="white" w="max">
-          <option defaultChecked value="eth-mainnet">
-            Ethereum
-          </option>
-          <option value="matic-mainnet">Polygon</option>
-          <option value="opt-mainnet">Optimism</option>
-          <option value="arb-mainnet">Arbitrum</option>
-        </Select>
-      </Box>
+      <Flex justifyContent="space-between" alignItems="center" mb={2}>
+        <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
+          Nft
+        </Text>
+        <Box float="right">
+          <Select onChange={(e) => chainHadler(e)} color="white" w="max">
+            <option defaultChecked value="eth-mainnet">
+              Ethereum
+            </option>
+            <option value="matic-mainnet">Polygon</option>
+            <option value="opt-mainnet">Optimism</option>
+            <option value="arb-mainnet">Arbitrum</option>
+          </Select>
+        </Box>
+      </Flex>
+
       <Flex
         gap={3}
         minW="full"

@@ -18,7 +18,8 @@ export const userDetailContext = createContext<any | null>(null);
 export function Assets(props: IAssetsProps) {
   const [userDetails, setUserDetails] = useState<Assets | null>(null);
   const [userNfts, setUserNfts] = useState<any>(null);
-  const [chain, setChain] = useState<chains>("eth-mainnet");
+  const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
+  const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
   const [transactions, setTransactions] = useState<any>(null);
 
   const { address, isConnected } = useAccount();
@@ -41,28 +42,28 @@ export function Assets(props: IAssetsProps) {
   useEffect(() => {
     const fetchNfts = async () => {
       const res = await fetch(
-        `./api/retrieving-nft/?address=${address}&chain=${chain}&pageKey=10`
+        `./api/retrieving-nft/?address=${address}&chain=${nftChain}&pageKey=10`
       );
       const data = await res.json();
       setUserNfts(data);
     };
     fetchNfts();
-  }, [address, chain]);
+  }, [address, nftChain]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       const res = await fetch(
-        `./api/retrieving-txns/?address=${address}&chain=${chain}&page=1&limit=10&category=erc20`
+        `./api/retrieving-txns/?address=${address}&chain=${txnsChain}&page=1&limit=10&category=erc20`
       );
       const data = await res.json();
       setTransactions(data);
     };
     fetchTransactions();
-  }, [chain, address]);
+  }, [txnsChain, address]);
 
   useEffect(() => {
-    console.log("user Txns", transactions);
-  }, [address, transactions]);
+    console.log("user Nfts", userNfts);
+  }, [address, userNfts]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
@@ -80,8 +81,12 @@ export function Assets(props: IAssetsProps) {
         <Flex mt={10}>
           <CoinsCard />
         </Flex>
-        <NftBlock setChain={setChain} userNfts={userNfts} />
-        <Transactions data={transactions?.result} />
+        <NftBlock setChain={setNftChain} userNfts={userNfts} />
+        <Transactions
+          chain={txnsChain}
+          setChain={setTxnsChain}
+          data={transactions?.result}
+        />
       </Box>
     </userDetailContext.Provider>
   );
