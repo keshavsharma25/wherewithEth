@@ -4,31 +4,17 @@ import React from "react";
 interface NftCardProps {
   image: string;
   name: string;
-  chainSymbol: string;
+  chainSymbol?: string;
   chainName: string;
   tokenId: string;
   price: number;
 }
 
-export const NftCard = ({
-  image,
-  name,
-  chainSymbol,
-  chainName,
-  price,
-}: NftCardProps) => {
+export const NftCard = ({ image, name, price }: NftCardProps) => {
   return (
     <Box bg="#1D1F37" rounded="md">
       <Box position="relative" maxW="80">
-        <Image
-          position="absolute"
-          w="40px"
-          top="1"
-          left="1"
-          src={chainSymbol}
-          alt={chainName}
-        />
-        <Image src={image} alt={name} />
+        <Image src={image} alt={name} objectFit="cover" />
       </Box>
       <Box p={2}>
         <Heading fontSize="1.2rem" color="white">
