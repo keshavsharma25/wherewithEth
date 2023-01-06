@@ -3,7 +3,7 @@ import React, { useEffect, useState, createContext } from "react";
 import { Blockies, NetworthCard, NftCard, NftBlock } from "./AssetsComponents";
 import { useAccount, useEnsName } from "wagmi";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
-import { Assets } from "../types";
+import { Assets } from "../utils/types";
 
 export interface IAssetsProps {}
 
