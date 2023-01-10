@@ -1,15 +1,15 @@
 import { Media, NftContract, NftMetadata } from "alchemy-sdk";
 
-export interface Token {
+export interface TokenType {
   token_address?: string;
   name: string;
   symbol: string;
   logo: string | null;
-  thumbnail: string | null;
+  thumbnail?: string | null;
   decimals: number;
   balance: string;
-  quote_rate: number;
-  quote: number;
+  quote_rate?: number;
+  quote?: number;
 }
 
 export interface Assets {
@@ -18,7 +18,7 @@ export interface Assets {
   updated_at: Date;
   quote_currency: string;
   total_balance: number;
-  items: Token[];
+  items: TokenType[];
 }
 
 export interface NftInformation {
@@ -31,12 +31,27 @@ export interface NftInformation {
   media?: Media[];
 }
 
-export type NftType = {
+export interface NftType {
   chain: chains;
   pageKey: string | null;
   totalCount: number;
   chainNfts: NftInformation[];
-};
+}
+
+export interface nativeBalanceType {
+  balance: string;
+  chain: {
+    _chainlistData: {
+      name: string;
+      chainId: number;
+      nativeCurrency: {
+        name: string;
+        symbol: string;
+        decimals: number;
+      };
+    };
+  };
+}
 
 export type chains =
   | "eth-mainnet"
