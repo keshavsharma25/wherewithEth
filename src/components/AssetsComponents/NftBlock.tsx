@@ -20,12 +20,18 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
         </Text>
         <Box float="right">
           <Select onChange={(e) => chainHadler(e)} color="white" w="max">
-            <option defaultChecked value="eth-mainnet">
+            <option color="black" defaultChecked value="eth-mainnet">
               Ethereum
             </option>
-            <option value="matic-mainnet">Polygon</option>
-            <option value="opt-mainnet">Optimism</option>
-            <option value="arb-mainnet">Arbitrum</option>
+            <option color="black" value="matic-mainnet">
+              Polygon
+            </option>
+            <option color="black" value="opt-mainnet">
+              Optimism
+            </option>
+            <option color="black" value="arb-mainnet">
+              Arbitrum
+            </option>
           </Select>
         </Box>
       </Flex>
@@ -59,7 +65,10 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
                   imageFormat={nft?.media[0].format}
                   image={
                     nft?.media[0]?.format === "svg+xml"
-                      ? nft?.media[0]?.thumbnail
+                      ? nft.contractMetadata.openSea.collectionName ===
+                        "ENS: Ethereum Name Service"
+                        ? nft.media[0].raw
+                        : nft?.media[0]?.thumbnail
                       : nft?.media[0]?.gateway
                   }
                   name={nft?.title}
