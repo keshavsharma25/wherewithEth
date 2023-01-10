@@ -1,12 +1,10 @@
-import { chainUrlMapper, getCurrentBlock } from "./helpers";
+import {
+  chainUrlMapper,
+  getCurrentBlock,
+  moralisScanMapper,
+  scanApiMapper,
+} from "./helpers";
 import { chains } from "./types";
-
-export const scanApiMapper: { [key in chains]: string } = {
-  "eth-mainnet": process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY as string,
-  "matic-mainnet": process.env.NEXT_PUBLIC_POLYGONSCAN_API_KEY as string,
-  "opt-mainnet": process.env.NEXT_PUBLIC_OPTIMISTICSCAN_API_KEY as string,
-  "arb-mainnet": process.env.NEXT_PUBLIC_ARBISCAN_API_KEY as string,
-};
 
 export const getNormalTxns = async (
   chain: chains,
@@ -170,4 +168,37 @@ export const getERC1155Txns = async (
   const data = await response.json();
 
   return data;
+};
+
+export const getNativeBalance = async (address: string, chain: string) => {
+  const url = chainUrlMapper[chain as chains];
+  const apiKey = scanApiMapper[chain as chains];
+
+  const params = new URLSearchParams();
+
+  params.append("module", "account");
+  params.append("action", "balance");
+  params.append("address", address);
+  params.append("tag", "latest");
+  params.append("apikey", apiKey);
+
+  const headers = {
+    accept: "application/json",
+    "Content-Type": "application/json",
+  };
+
+  const options = {
+    method: "GET",
+    headers: headers,
+  };
+
+  const response = await fetch(url + "?" + params.toString(), options);
+  const data = await response.json();
+
+  return {
+    chain: chain,
+    address: address,
+    status: data.status,
+    balance: data.result,
+  };
 };
