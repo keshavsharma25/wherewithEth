@@ -24,6 +24,7 @@ export const Transactions = ({
 }) => {
   const router = useRouter();
   const selectedChainref = useRef<HTMLSelectElement>(null);
+  const selectedTxnsType = useRef<HTMLSelectElement>(null);
 
   const chainHandler = (e: any) => {
     setChain(e.target.value);
@@ -40,7 +41,13 @@ export const Transactions = ({
           Transactions
         </Text>
         <Flex float="right" gap={5}>
-          <Select onChange={(e) => txnsTypeHandler(e)} color="white" w="max">
+          <Select
+            bg="black"
+            onChange={(e) => txnsTypeHandler(e)}
+            color="white"
+            w="max"
+            ref={selectedTxnsType}
+          >
             <option defaultChecked value="erc20">
               erc-20
             </option>
@@ -54,6 +61,7 @@ export const Transactions = ({
             onChange={(e) => chainHandler(e)}
             color="white"
             w="max"
+            bg="black"
           >
             <option defaultChecked value="eth-mainnet">
               Ethereum
@@ -76,9 +84,15 @@ export const Transactions = ({
             <Th fontSize="0.7rem" color="white">
               To
             </Th>
-            <Th fontSize="0.7rem" color="white">
-              Value
-            </Th>
+            {selectedTxnsType.current?.value === "erc20" ? (
+              <Th fontSize="0.7rem" color="white">
+                Value
+              </Th>
+            ) : (
+              <Th fontSize="0.7rem" color="white">
+                Token
+              </Th>
+            )}
           </Tr>
         </Thead>
         <Tbody>
@@ -99,12 +113,16 @@ export const Transactions = ({
                 </Td>
                 <Td>{item.from.slice(0, 7)}</Td>
                 <Td>{item.to.slice(0, 7)}</Td>
-                <Td>
-                  {(
-                    parseInt(item.value) /
-                    10 ** parseInt(item.tokenDecimal)
-                  )?.toFixed(2)}
-                </Td>
+                {selectedTxnsType.current?.value === "erc20" ? (
+                  <Td>
+                    {(
+                      parseInt(item.value) /
+                      10 ** parseInt(item.tokenDecimal)
+                    )?.toFixed(2)}
+                  </Td>
+                ) : (
+                  <Td>{item.tokenSymbol}</Td>
+                )}
               </Tr>
             ))}
         </Tbody>

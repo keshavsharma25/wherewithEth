@@ -27,7 +27,13 @@ export const NftCard = ({ image, name, price, imageFormat }: NftCardProps) => {
             <source src={image} />
           </video>
         ) : (
-          <Image w="full" src={image} alt={name} objectFit="cover" />
+          <Image
+            style={{ aspectRatio: 1 }}
+            w="full"
+            src={image}
+            alt={name}
+            objectFit="cover"
+          />
         )}
       </Box>
       <Flex justify="space-between" alignItems="center" p={2}>

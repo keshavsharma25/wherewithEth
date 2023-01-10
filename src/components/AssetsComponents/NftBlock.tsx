@@ -60,7 +60,7 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
                   image={
                     nft?.media[0]?.format === "svg+xml"
                       ? nft?.media[0]?.thumbnail
-                      : nft?.media[0]?.raw
+                      : nft?.media[0]?.gateway
                   }
                   name={nft?.title}
                   price={nft?.contractMetadata?.openSea?.floorPrice}
