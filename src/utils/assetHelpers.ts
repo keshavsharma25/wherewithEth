@@ -1,3 +1,4 @@
+import { debug } from "console";
 import { prisma } from "../utils/prismaClient";
 import { getNativeBalance } from "./etherscanHelpers";
 import { allChainsDecimals, getQuote } from "./helpers";
@@ -29,79 +30,114 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
 
   const result = [];
 
-  const tokensInDB = await prisma.coins.findMany({
-    where: {
-      AND: {
-        code: {
-          in: tokens.map((token: TokenType) => token.symbol),
-        },
-        name: {
-          in: tokens.map((token: TokenType) => token.name),
+  try {
+    const tokensInDB = await prisma.coins.findMany({
+      where: {
+        AND: {
+          code: {
+            in: tokens.map((token: TokenType) => token.symbol),
+          },
+          name: {
+            in: tokens.map((token: TokenType) => token.name),
+          },
         },
       },
-    },
-  });
+    });
 
-  const tokenCodesInDB = tokensInDB.map((t) => t.code);
+    const tokenCodesInDB = tokensInDB.map((t) => t.code);
 
-  const tokenPrices = await getTokensPrices(tokenCodesInDB);
+    console.log(tokenCodesInDB);
 
-  for (const token of tokens) {
-    if (tokenCodesInDB.includes(token.symbol)) {
-      const tokenInDb = tokensInDB.find((t) => t.code === token.symbol);
+    const tokenPrices = await getTokensPrices(tokenCodesInDB);
 
-      result.push({
-        token_address: token.token_address,
-        name: token.name,
-        code: token.symbol,
-        decimals: token.decimals,
-        balance: token.balance,
-        quote: await getQuote(
+    for (const token of tokens) {
+      if (
+        tokenCodesInDB.includes(token.symbol) &&
+        tokenPrices[token.symbol]?.rate
+      ) {
+        const tokenInDb = tokensInDB.find((t) => t.code === token.symbol);
+
+        const quote = await getQuote(
           token.balance,
           token.decimals,
-          tokenPrices[token.symbol].rate
-        ),
-        age: tokenInDb?.age,
-        color: tokenInDb?.color,
-        image: {
-          png32: tokenInDb?.png32,
-          png64: tokenInDb?.png64,
-          webp32: tokenInDb?.webp32,
-          webp64: tokenInDb?.webp64,
-        },
-        categories: tokenInDb?.categories,
-        ...tokenPrices[token.symbol],
-      });
-    } else {
-      const tokenAddress = token.token_address;
-      const platform = "eth";
+          tokenPrices[token.symbol]?.rate ? tokenPrices[token.symbol].rate : 0
+        );
 
-      const tokenPrice = await getTokenContractPrice(
-        tokenAddress as string,
-        platform
-      );
-      result.push({
-        token_address: token.token_address,
-        name: token.name,
-        code: token.symbol,
-        decimals: token.decimals,
-        balance: token.balance,
-        quote: await getQuote(token.balance, token.decimals, tokenPrice?.rate),
-        age: tokenPrice?.age,
-        color: tokenPrice?.color,
-        image: {
-          png32: tokenPrice?.png32,
-          png64: tokenPrice?.png64,
-          webp32: tokenPrice?.webp32,
-          webp64: tokenPrice?.webp64,
-        },
-        categories: tokenPrice?.categories.join(", "),
-        rate: tokenPrice?.rate,
-        volume: tokenPrice?.volume,
-        cap: tokenPrice?.cap,
-        liquidity: tokenPrice?.liquidity,
-        delta: tokenPrice?.delta,
-      });
+        result.push({
+          token_address: token.token_address,
+          name: token.name,
+          code: token.symbol,
+          decimals: token.decimals,
+          balance: token.balance,
+          quote: quote,
+          age: tokenInDb?.age,
+          color: tokenInDb?.color,
+          image: {
+            png32: tokenInDb?.png32,
+            png64: tokenInDb?.png64,
+            webp32: tokenInDb?.webp32,
+            webp64: tokenInDb?.webp64,
+          },
+          categories: tokenInDb?.categories,
+          ...tokenPrices[token.symbol],
+        });
+      } else {
+        const tokenAddress = token.token_address;
+        const platform = "eth";
+
+        const tokenPrice = await getTokenContractPrice(
+          tokenAddress as string,
+          platform
+        );
+
+        console.log("token Address: ", tokenAddress);
+        console.log("tokenPrice: ", tokenPrice);
+
+        if (tokenPrice.rate) {
+          const quote = await getQuote(
+            token.balance,
+            token.decimals,
+            tokenPrices[token.symbol]?.rate ? tokenPrices[token.symbol].rate : 0
+          );
+
+          if (quote === null || quote === undefined || quote === 0) {
+            continue;
+          }
+
+          result.push({
+            token_address: token.token_address,
+            name: token.name,
+            code: token.symbol,
+            decimals: token.decimals,
+            balance: token.balance,
+            quote: await getQuote(
+              token.balance,
+              token.decimals,
+              tokenPrice?.rate
+            ),
+            age: tokenPrice?.age,
+            color: tokenPrice?.color,
+            image: {
+              png32: tokenPrice?.png32,
+              png64: tokenPrice?.png64,
+              webp32: tokenPrice?.webp32,
+              webp64: tokenPrice?.webp64,
+            },
+            categories: tokenPrice?.categories
+              ? tokenPrice?.categories.join(", ")
+              : "",
+            rate: tokenPrice?.rate,
+            volume: tokenPrice?.volume,
+            cap: tokenPrice?.cap,
+            liquidity: tokenPrice?.liquidity,
+            delta: tokenPrice?.delta,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
     }
   }
 
@@ -134,7 +170,9 @@ export const getNative = async (address: string, chain: string) => {
             webp32: nativePrice.webp32,
             webp64: nativePrice.webp64,
           },
-          categories: nativePrice.categories.join(", "),
+          categories: nativePrice?.categories
+            ? nativePrice?.categories.join(", ")
+            : "",
           allTimeHighUSD: nativePrice.allTimeHighUSD,
           rate: nativePrice.rate,
           volume: nativePrice.volume,
@@ -168,7 +206,9 @@ export const getNative = async (address: string, chain: string) => {
           webp32: nativePrice.webp32,
           webp64: nativePrice.webp64,
         },
-        categories: nativePrice.categories.join(", "),
+        categories: nativePrice?.categories
+          ? nativePrice?.categories.join(", ")
+          : "",
         allTimeHighUSD: nativePrice.allTimeHighUSD,
         rate: nativePrice.rate,
         volume: nativePrice.volume,
