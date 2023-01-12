@@ -21,7 +21,13 @@ export const NftCard = ({ image, name, price, imageFormat }: NftCardProps) => {
       boxShadow="lg"
       mb="5"
     >
-      <Box position="relative" w="250px" p="4" rounded="md" overflow="hidden">
+      <Box
+        position="relative"
+        w="250px"
+        p="4"
+        borderRadius="5px"
+        overflow="hidden"
+      >
         {imageFormat === "mp4" ? (
           <video>
             <source src={image} />
@@ -36,11 +42,16 @@ export const NftCard = ({ image, name, price, imageFormat }: NftCardProps) => {
           />
         )}
       </Box>
-      <Flex justify="space-between" alignItems="center" p={2}>
-        <Heading fontSize="1rem" color="white">
-          {name}
-        </Heading>
-        <Text color="white">{price ? `${price?.toFixed(4)} ETH` : null}</Text>
+      <Flex justify="space-between" alignItems="flex-start" px={4}>
+        <Box>
+          <Heading fontSize="1rem" color="white">
+            {name}
+          </Heading>
+        </Box>
+        <Box>
+          {price && <Text color="gray.300">Floor price</Text>}
+          <Text color="white">{price ? `Ξ ${price?.toFixed(4)}` : null}</Text>
+        </Box>
       </Flex>
     </Box>
   );
