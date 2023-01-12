@@ -29,11 +29,8 @@
     "react-blockies": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
-<<<<<<< HEAD
     "string-similarity": "^4.0.4",
-=======
     "swr": "^2.0.0",
->>>>>>> 7fe8af2791c668a05855393d6de25c3e4784cbd7
     "wagmi": "~0.8.2"
   },
   "devDependencies": {
