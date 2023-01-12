@@ -1,5 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState, createContext } from "react";
+import useSwr from "swr";
 import {
   Blockies,
   NetworthCard,
@@ -15,6 +16,8 @@ export interface IAssetsProps {}
 
 export const userDetailContext = createContext<any | null>(null);
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json);
+
 export function Assets(props: IAssetsProps) {
   const [userDetails, setUserDetails] = useState<Assets | null>(null);
   const [userNfts, setUserNfts] = useState<any>(null);
@@ -27,9 +30,12 @@ export function Assets(props: IAssetsProps) {
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await fetch(`./api/retrieving-coins/?address=${address}`);
+      console.log("this is runnning");
+      const res = await fetch(
+        `./api/retrieving-coins/?address=${address}&chain=eth-mainnet`
+      );
       const data = await res.json();
-      console.log("fetch balance is running", data.total_balance);
+      console.log("fetch balance is running", data);
 
       setUserDetails({
         ...userDetails!,

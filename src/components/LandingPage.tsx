@@ -52,16 +52,18 @@ export function LandingPage(props: ILandingPageProps) {
 
         <Flex
           flexDirection={{
-            base: "row",
+            base: "column",
             lg: "row",
             md: "column",
           }}
           maxW="74.68rem"
-          pt="15.18rem"
+          pt={{ base: "10rem", md: "15.18rem" }}
           justifyContent="space-between"
         >
-          <Box pt="2.25rem">
-            <VStack alignItems={{ md: "center", lg: "flex-start" }}>
+          <Box pt={{ base: "0rem", md: "2.25rem" }}>
+            <VStack
+              alignItems={{ base: "center", md: "center", lg: "flex-start" }}
+            >
               <Flex alignItems="center" position="relative">
                 <Image
                   src="eth.svg"
@@ -76,13 +78,14 @@ export function LandingPage(props: ILandingPageProps) {
                 />
                 <Heading
                   color="white"
-                  fontSize={{ md: "2rem", lg: "1.8rem" }}
+                  fontSize={{ base: "1.5rem", md: "2rem", lg: "1.8rem" }}
                   fontFamily=""
                   lineHeight="3rem"
                   fontWeight="800"
                 >
                   What is wherewithETH?
                 </Heading>
+                 
               </Flex>
               <Text
                 color="#9A9AB7"
@@ -90,7 +93,7 @@ export function LandingPage(props: ILandingPageProps) {
                 fontFamily="DM Sans"
                 fontWeight="400"
                 lineHeight="1.75rem"
-                textAlign={{ md: "center", lg: "left" }}
+                textAlign={{ base: "center", md: "center", lg: "left" }}
                 pt="2.31rem"
                 pb="3rem"
                 px={{ base: "10", lg: "0" }}
