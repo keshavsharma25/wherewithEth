@@ -19,7 +19,7 @@ export function LandingPage(props: ILandingPageProps) {
     <>
       <Flex flexDirection="column" alignItems="center" justifyContent="center">
         <Heading
-          fontSize={["2rem", "2.5rem", "3rem", "3.5rem", "4rem"]}
+          fontSize={["1.5rem", "2.5rem", "3rem", "3.5rem", "4rem"]}
           color="white"
           textAlign={"center"}
           pt="6.75rem"
@@ -52,22 +52,23 @@ export function LandingPage(props: ILandingPageProps) {
 
         <Flex
           flexDirection={{
-            base: "row",
+            base: "column",
             lg: "row",
             md: "column",
           }}
           maxW="74.68rem"
-          pt="15.18rem"
+          pt={{ base: "3rem", md: "15.18rem" }}
           justifyContent="space-between"
         >
           <Box pt="2.25rem">
-            <VStack alignItems={{ md: "center", lg: "flex-start" }}>
+            <VStack alignItems={{ base: "center", lg: "flex-start" }}>
               <Flex alignItems="center" position="relative">
                 <Image
                   src="eth.svg"
                   alt="ethlogo"
                   h="112"
                   w="112"
+                  display={{ base: "none", md: "block" }}
                   position="absolute"
                   top="-2rem"
                   left="-3rem"
@@ -76,10 +77,10 @@ export function LandingPage(props: ILandingPageProps) {
                 />
                 <Heading
                   color="white"
-                  fontSize={{ md: "2rem", lg: "1.8rem" }}
+                  fontSize={{ base: "1.2rem", md: "1.5rem", lg: "1.8rem" }}
                   fontFamily=""
                   lineHeight="3rem"
-                  fontWeight="800"
+                  fontWeight="600"
                 >
                   What is wherewithETH?
                 </Heading>
@@ -90,8 +91,8 @@ export function LandingPage(props: ILandingPageProps) {
                 fontFamily="DM Sans"
                 fontWeight="400"
                 lineHeight="1.75rem"
-                textAlign={{ md: "center", lg: "left" }}
-                pt="2.31rem"
+                textAlign={{ base: "center", lg: "left" }}
+                pt={{ base: "1rem", md: "2.31rem" }}
                 pb="3rem"
                 px={{ base: "10", lg: "0" }}
               >
@@ -129,19 +130,19 @@ export function LandingPage(props: ILandingPageProps) {
           >
             <Image
               marginX="auto"
-              w={{ base: "60", md: "80" }}
+              w={{ base: "24", md: "80" }}
               h="full"
               src="newWorthIcon.png"
             />
             <Image
               marginX="auto"
-              w={{ base: "60", md: "80" }}
+              w={{ base: "24", md: "80" }}
               h="full"
               src="NFTIcon.png"
             />
             <Image
               marginX="auto"
-              w={{ base: "60", md: "80" }}
+              w={{ base: "24", md: "80" }}
               h="full"
               src="TransactionIcon.png"
             />

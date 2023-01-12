@@ -50,10 +50,8 @@ export function ConnectButtonCustom(props: IConnectButtonCustomProps) {
                         bgGradient:
                           "linear(180deg, #7C73CC -20%, #3F31B3 133%);)",
                       }}
-                      px="0.875rem"
+                      px={{ base: "0.875rem", md: "2rem" }}
                       py={{ base: "1rem", md: "1.5rem" }}
-                      w={{ sm: "5rem", md: "9.19rem" }}
-                      h={{ base: ".5rem", md: "3.13rem" }}
                       fontSize={{ base: "0.8rem", md: "1.25rem" }}
                       lineHeight="1.375rem"
                       fontFamily="Plus Jakarta Sans"

@@ -83,13 +83,19 @@ export const Transactions = ({
             <Th fontSize="0.7rem" color="white">
               Txn. Hash
             </Th>
+            {selectedTxnsType.current?.value === "normal" && (
+              <Th fontSize="0.7rem" color="white">
+                Method
+              </Th>
+            )}
             <Th fontSize="0.7rem" color="white">
               From
             </Th>
             <Th fontSize="0.7rem" color="white">
               To
             </Th>
-            {selectedTxnsType.current?.value === "erc20" ? (
+            {selectedTxnsType.current?.value === "erc20" ||
+            selectedTxnsType.current?.value === "normal" ? (
               <Th fontSize="0.7rem" color="white">
                 Value
               </Th>
@@ -116,6 +122,14 @@ export const Transactions = ({
                 >
                   {item.hash.slice(0, 7)}
                 </Td>
+                {selectedTxnsType.current?.value === "normal" && (
+                  <Td>
+                    {item?.functionName === "" ||
+                    item?.functionName?.slice(0, 8) === "transfer"
+                      ? "Transfer"
+                      : `${item.functionName?.slice(0, 8)}...`}
+                  </Td>
+                )}
                 <Td>{item.from.slice(0, 7)}</Td>
                 <Td>{item.to.slice(0, 7)}</Td>
                 {selectedTxnsType.current?.value === "erc20" ? (
@@ -125,6 +139,8 @@ export const Transactions = ({
                       10 ** parseInt(item.tokenDecimal)
                     )?.toFixed(2)}
                   </Td>
+                ) : selectedTxnsType.current?.value === "normal" ? (
+                  <Td>{(parseInt(item.value) / 10 ** 18)?.toFixed(5)}</Td>
                 ) : (
                   <Td>{item.tokenSymbol}</Td>
                 )}

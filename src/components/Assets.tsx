@@ -63,8 +63,8 @@ export function Assets(props: IAssetsProps) {
   }, [txnsChain, address, txnsType]);
 
   useEffect(() => {
-    console.log("user nfts", userNfts);
-  }, [address, userNfts]);
+    console.log("user nfts", transactions);
+  }, [address, transactions]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
