@@ -85,7 +85,6 @@ export function LandingPage(props: ILandingPageProps) {
                 >
                   What is wherewithETH?
                 </Heading>
-                 
               </Flex>
               <Text
                 color="#9A9AB7"
@@ -110,7 +109,7 @@ export function LandingPage(props: ILandingPageProps) {
             </VStack>
           </Box>
           <Box
-            w={{ md: "30rem", lg: "20rem" }}
+            w={{ md: "15rem", lg: "25rem", xl: "30rem" }}
             display={{ base: "none", lg: "block" }}
             marginX={{ md: "auto", lg: 0 }}
           >
@@ -119,6 +118,7 @@ export function LandingPage(props: ILandingPageProps) {
               h="full"
               src="netWorthTxnNFT.png"
               alt="netWorthTxnNFT"
+              objectFit="contain"
             />
           </Box>
           <Flex
@@ -129,9 +129,24 @@ export function LandingPage(props: ILandingPageProps) {
             justifyContent="center"
             gap="5"
           >
-            <Image marginX="auto" w="80" h="full" src="newWorthIcon.png" />
-            <Image marginX="auto" w="80" h="full" src="NFTIcon.png" />
-            <Image marginX="auto" w="80" h="full" src="TransactionIcon.png" />
+            <Image
+              marginX="auto"
+              w={{ base: "60", md: "80" }}
+              h="full"
+              src="newWorthIcon.png"
+            />
+            <Image
+              marginX="auto"
+              w={{ base: "60", md: "80" }}
+              h="full"
+              src="NFTIcon.png"
+            />
+            <Image
+              marginX="auto"
+              w={{ base: "60", md: "80" }}
+              h="full"
+              src="TransactionIcon.png"
+            />
           </Flex>
         </Flex>
       </Flex>
