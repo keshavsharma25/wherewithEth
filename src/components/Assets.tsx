@@ -41,7 +41,7 @@ export function Assets(props: IAssetsProps) {
       setAssetsLoading(false);
     };
     fetchBalance();
-  }, [address, assetChain]);
+  }, [address]);
 
   useEffect(() => {
     const fetchNfts = async () => {
