@@ -29,7 +29,7 @@ export function Assets(props: IAssetsProps) {
   useEffect(() => {
     const fetchBalance = async () => {
       const res = await fetch(
-        `./api/retrieving-coins/?address=${address}&chain=${assetChain}`
+        `./api/retrieving-coins/?address=${address}&chain=all`
       );
       const data = await res.json();
       console.log("fetch balance is running", data);
@@ -61,9 +61,9 @@ export function Assets(props: IAssetsProps) {
     fetchTransactions();
   }, [txnsChain, address, txnsType]);
 
-  // useEffect(() => {
-  //   console.log("user assets", userDetails);
-  // }, [address, userDetails]);
+  useEffect(() => {
+    console.log("user assets", userDetails);
+  }, [address, userDetails]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
@@ -79,7 +79,10 @@ export function Assets(props: IAssetsProps) {
           />
         </Flex>
         <Flex mt={10}>
-          <CoinsCard setChain={(value) => setAssetChain(value)} />
+          <CoinsCard
+            chain={assetChain}
+            setChain={(value) => setAssetChain(value)}
+          />
         </Flex>
         <NftBlock setChain={setNftChain} userNfts={userNfts} />
         <Transactions

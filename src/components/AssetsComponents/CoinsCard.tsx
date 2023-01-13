@@ -1,15 +1,15 @@
 import { Box, Flex, Heading, Select, Text } from "@chakra-ui/react";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import { BsBarChartFill } from "react-icons/bs";
 import CoinInnerCard from "./CoinInnerCard";
 import { userDetailContext } from "../Assets";
-import { ChainSelector } from "../ChainSelector";
 
 interface CoinsCardProps {
   setChain: (value: string) => void;
+  chain: string;
 }
 
-export const CoinsCard = ({ setChain }: CoinsCardProps) => {
+export const CoinsCard = ({ setChain, chain }: CoinsCardProps) => {
   const userData = useContext(userDetailContext);
 
   return (
@@ -52,25 +52,47 @@ export const CoinsCard = ({ setChain }: CoinsCardProps) => {
           <Text color="#647087">QTY</Text>
         </Flex>
         <Flex mt={10} direction="column" gap={5}>
-          {userData?.assets?.map((user: any, index: number) => (
-            <CoinInnerCard
-              bgColor={user?.color}
-              address={user?.code}
-              key={index}
-              name={user?.code}
-              image={user?.image?.png64}
-              incrasePercentage={parseFloat(
-                ((1 - user?.delta?.hour) * 100)?.toFixed(2)
-              )}
-              quantity={Number(
-                (Number(user?.balance) / Math.pow(10, user?.decimals))?.toFixed(
-                  5
-                )
-              )}
-              token_value={user.rate ? user.rate : 0}
-              value={Number(user?.quote?.toFixed(2))}
-            />
-          ))}
+          {chain === "all"
+            ? userData?.assets?.map((user: any, index: number) => (
+                <CoinInnerCard
+                  bgColor={user?.color}
+                  address={user?.code}
+                  key={index}
+                  name={user?.code}
+                  image={user?.image?.png64}
+                  incrasePercentage={parseFloat(
+                    ((1 - user?.delta?.hour) * 100)?.toFixed(2)
+                  )}
+                  quantity={Number(
+                    (
+                      Number(user?.balance) / Math.pow(10, user?.decimals)
+                    )?.toFixed(5)
+                  )}
+                  token_value={user.rate ? user.rate : 0}
+                  value={Number(user?.quote?.toFixed(2))}
+                />
+              ))
+            : userData?.assets
+                ?.filter((user: any) => user?.chain === chain)
+                .map((user: any, index: number) => (
+                  <CoinInnerCard
+                    bgColor={user?.color}
+                    address={user?.code}
+                    key={index}
+                    name={user?.code}
+                    image={user?.image?.png64}
+                    incrasePercentage={parseFloat(
+                      ((1 - user?.delta?.hour) * 100)?.toFixed(2)
+                    )}
+                    quantity={Number(
+                      (
+                        Number(user?.balance) / Math.pow(10, user?.decimals)
+                      )?.toFixed(5)
+                    )}
+                    token_value={user.rate ? user.rate : 0}
+                    value={Number(user?.quote?.toFixed(2))}
+                  />
+                ))}
         </Flex>
       </Flex>
     </Flex>
