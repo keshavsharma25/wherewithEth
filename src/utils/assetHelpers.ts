@@ -58,7 +58,6 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               quote: quote,
               ...tokenPrices[token.symbol],
               age: tokenInDb?.age,
-              color: tokenInDb?.color,
               image: {
                 png32: tokenInDb?.png32,
                 png64: tokenInDb?.png64,
@@ -96,7 +95,6 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               liquidity: tokenPrice?.liquidity,
               delta: tokenPrice?.delta,
               age: tokenPrice?.age,
-              color: tokenPrice?.color,
               image: {
                 png32: tokenPrice?.png32,
                 png64: tokenPrice?.png64,
@@ -148,7 +146,6 @@ export const getNative = async (address: string, chain: string) => {
           delta: nativePrice.delta,
           allTimeHighUSD: nativePrice.allTimeHighUSD,
           age: nativePrice.age,
-          color: nativePrice.color,
           image: {
             png32: nativePrice.png32,
             png64: nativePrice.png64,
@@ -186,7 +183,6 @@ export const getNative = async (address: string, chain: string) => {
         delta: nativePrice.delta,
         allTimeHighUSD: nativePrice.allTimeHighUSD,
         age: nativePrice.age,
-        color: nativePrice.color,
         image: {
           png32: nativePrice.png32,
           png64: nativePrice.png64,
