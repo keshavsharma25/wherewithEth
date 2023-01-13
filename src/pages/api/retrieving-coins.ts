@@ -33,13 +33,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const result = [...native, ...tokens];
 
       for (const token of result) {
-        totalNetWorth += token.quote;
+        totalNetWorth += Number(token.quote);
       }
 
       res.status(200).json({
         address: address as string,
         chain: chain as chains,
-        Networth: totalNetWorth,
+        networth: totalNetWorth,
         assets: result,
       });
     } else {
@@ -49,13 +49,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const result = [...native, ...tokens];
 
       for (const token of result) {
-        totalNetWorth += token.quote;
+        totalNetWorth += Number(token.quote);
       }
 
       res.status(200).json({
         address: address as string,
         chain: chain as chains,
-        Networth: totalNetWorth,
+        networth: totalNetWorth,
         assets: result,
       });
     }
