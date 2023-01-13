@@ -1,15 +1,18 @@
 import { Box, Flex, Heading, Select, Text } from "@chakra-ui/react";
 import React, { useContext, useRef, useEffect } from "react";
 import { BsBarChartFill } from "react-icons/bs";
+import { Spinner } from "@chakra-ui/react";
+
 import CoinInnerCard from "./CoinInnerCard";
 import { userDetailContext } from "../Assets";
 
 interface CoinsCardProps {
   setChain: (value: string) => void;
   chain: string;
+  loading: boolean;
 }
 
-export const CoinsCard = ({ setChain, chain }: CoinsCardProps) => {
+export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
   const userData = useContext(userDetailContext);
 
   return (
@@ -51,32 +54,13 @@ export const CoinsCard = ({ setChain, chain }: CoinsCardProps) => {
           <Text color="#647087">CURRENCY</Text>
           <Text color="#647087">QTY</Text>
         </Flex>
-        <Flex mt={10} direction="column" gap={5}>
-          {chain === "all"
-            ? userData?.assets?.map((user: any, index: number) => (
-                <CoinInnerCard
-                  bgColor={user?.color}
-                  address={user?.code}
-                  key={index}
-                  name={user?.code}
-                  image={user?.image?.png64}
-                  incrasePercentage={parseFloat(
-                    ((1 - user?.delta?.hour) * 100)?.toFixed(2)
-                  )}
-                  quantity={Number(
-                    (
-                      Number(user?.balance) / Math.pow(10, user?.decimals)
-                    )?.toFixed(5)
-                  )}
-                  token_value={user.rate ? user.rate : 0}
-                  value={Number(user?.quote?.toFixed(2))}
-                />
-              ))
-            : userData?.assets
-                ?.filter((user: any) => user?.chain === chain)
-                .map((user: any, index: number) => (
+        {loading ? (
+          <Spinner mx="auto" size="xl" color="blue.500" />
+        ) : (
+          <Flex mt={10} direction="column" gap={5}>
+            {chain === "all"
+              ? userData?.assets?.map((user: any, index: number) => (
                   <CoinInnerCard
-                    bgColor={user?.color}
                     address={user?.code}
                     key={index}
                     name={user?.code}
@@ -92,8 +76,29 @@ export const CoinsCard = ({ setChain, chain }: CoinsCardProps) => {
                     token_value={user.rate ? user.rate : 0}
                     value={Number(user?.quote?.toFixed(2))}
                   />
-                ))}
-        </Flex>
+                ))
+              : userData?.assets
+                  ?.filter((user: any) => user?.chain === chain)
+                  .map((user: any, index: number) => (
+                    <CoinInnerCard
+                      address={user?.code}
+                      key={index}
+                      name={user?.code}
+                      image={user?.image?.png64}
+                      incrasePercentage={parseFloat(
+                        ((1 - user?.delta?.day) * 100)?.toFixed(2)
+                      )}
+                      quantity={Number(
+                        (
+                          Number(user?.balance) / Math.pow(10, user?.decimals)
+                        )?.toFixed(5)
+                      )}
+                      token_value={user.rate ? user.rate : 0}
+                      value={Number(user?.quote?.toFixed(2))}
+                    />
+                  ))}
+          </Flex>
+        )}
       </Flex>
     </Flex>
   );

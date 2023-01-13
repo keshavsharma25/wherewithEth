@@ -1,11 +1,12 @@
 import { Box, Flex, Image, Text, Heading } from "@chakra-ui/react";
 import * as React from "react";
 import Identicon from "react-blockies";
+import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
+
 export interface ICoinInnerCardProps {
   address: string;
   image: string | null;
   name: string;
-  bgColor: string;
   token_value: number;
   incrasePercentage: number;
   quantity: number;
@@ -19,7 +20,7 @@ export default function CoinInnerCard({
   token_value,
   incrasePercentage,
   quantity,
-  bgColor,
+
   value,
 }: ICoinInnerCardProps) {
   return (
@@ -73,9 +74,16 @@ export default function CoinInnerCard({
           </Heading>
           <Flex justifyContent="center" alignItems="center" gap="2">
             <Text color="#647087">$ {token_value?.toFixed(2)}</Text>
-            <Text color={incrasePercentage > 0 ? "#35DAB2" : "#E31C26"}>
-              {incrasePercentage}
-            </Text>
+            <Flex justifyContent="center" alignItems="center">
+              {incrasePercentage > 0 ? (
+                <AiOutlineCaretUp color="#35DAB2" />
+              ) : (
+                <AiOutlineCaretDown color="#E31C26" />
+              )}
+              <Text color={incrasePercentage > 0 ? "#35DAB2" : "#E31C26"}>
+                {incrasePercentage}
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
       </Flex>

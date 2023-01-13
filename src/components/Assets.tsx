@@ -19,6 +19,8 @@ export function Assets(props: IAssetsProps) {
   const [userDetails, setUserDetails] = useState<any | null>(null);
   const [userNfts, setUserNfts] = useState<any>(null);
   const [assetChain, setAssetChain] = useState("all");
+  const [assetsLoading, setAssetsLoading] = useState(false);
+  const [nftLoading, setNftLoading] = useState(false);
   const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
   const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
   const [transactions, setTransactions] = useState<any>(null);
@@ -28,6 +30,7 @@ export function Assets(props: IAssetsProps) {
 
   useEffect(() => {
     const fetchBalance = async () => {
+      setAssetsLoading(true);
       const res = await fetch(
         `./api/retrieving-coins/?address=${address}&chain=all`
       );
@@ -35,17 +38,20 @@ export function Assets(props: IAssetsProps) {
       console.log("fetch balance is running", data);
 
       setUserDetails(data);
+      setAssetsLoading(false);
     };
     fetchBalance();
   }, [address, assetChain]);
 
   useEffect(() => {
     const fetchNfts = async () => {
+      setNftLoading(true);
       const res = await fetch(
         `./api/retrieving-nft/?address=${address}&chain=${nftChain}&pageKey=10`
       );
       const data = await res.json();
       setUserNfts(data);
+      setNftLoading(false);
     };
     fetchNfts();
   }, [address, nftChain]);
@@ -80,11 +86,16 @@ export function Assets(props: IAssetsProps) {
         </Flex>
         <Flex mt={10}>
           <CoinsCard
+            loading={assetsLoading}
             chain={assetChain}
             setChain={(value) => setAssetChain(value)}
           />
         </Flex>
-        <NftBlock setChain={setNftChain} userNfts={userNfts} />
+        <NftBlock
+          loading={nftLoading}
+          setChain={setNftChain}
+          userNfts={userNfts}
+        />
         <Transactions
           setTxnsType={setTxnsType}
           setChain={setTxnsChain}

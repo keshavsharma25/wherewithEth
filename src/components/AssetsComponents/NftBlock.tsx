@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { Box, Flex, Select, Text } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
+
 import { NftCard } from "./NftCard";
 import { ChainSelector } from "../ChainSelector";
 
 interface NftBlockProps {
   userNfts: any;
   setChain: any;
+  loading: boolean;
 }
 
-export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
+export const NftBlock: React.FC<NftBlockProps> = ({
+  userNfts,
+  setChain,
+  loading,
+}) => {
   const chainHandler = (value: string) => {
     setChain(value);
   };
@@ -24,53 +31,57 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
         </Box>
       </Flex>
 
-      <Flex
-        gap={3}
-        minW="full"
-        overflowX="scroll"
-        scrollBehavior="smooth"
-        css={{
-          "&::-webkit-scrollbar": {
-            width: "2px",
-            height: "5px",
-          },
-          "&::-webkit-scrollbar-track": {
-            width: "2px",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            background: "rgba(255,255,255,0.2)",
-            borderRadius: "10px",
-          },
-        }}
-      >
-        {userNfts?.ownedNfts.length > 0 ? (
-          userNfts?.ownedNfts?.map(
-            (nft: any, index: number) =>
-              nft.media[0].raw !== "" && (
-                <NftCard
-                  key={index}
-                  chainName={userNfts?.chain}
-                  imageFormat={nft?.media[0].format}
-                  image={
-                    nft?.media[0]?.format === "svg+xml"
-                      ? nft.contractMetadata.openSea.collectionName ===
-                        "ENS: Ethereum Name Service"
-                        ? nft.media[0].raw
-                        : nft?.media[0]?.thumbnail
-                      : nft?.media[0]?.gateway
-                  }
-                  name={nft?.title}
-                  price={nft?.contractMetadata?.openSea?.floorPrice}
-                  tokenId={nft?.contract?.address}
-                />
-              )
-          )
-        ) : (
-          <Text color="white" fontSize="1.5rem" mx="auto" fontWeight="bold">
-            No Nft found
-          </Text>
-        )}
-      </Flex>
+      {loading ? (
+        <Spinner mx="auto" size="xl" color="blue.500" />
+      ) : (
+        <Flex
+          gap={3}
+          minW="full"
+          overflowX="scroll"
+          scrollBehavior="smooth"
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "2px",
+              height: "5px",
+            },
+            "&::-webkit-scrollbar-track": {
+              width: "2px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "rgba(255,255,255,0.2)",
+              borderRadius: "10px",
+            },
+          }}
+        >
+          {userNfts?.ownedNfts.length > 0 ? (
+            userNfts?.ownedNfts?.map(
+              (nft: any, index: number) =>
+                nft.media[0].raw !== "" && (
+                  <NftCard
+                    key={index}
+                    chainName={userNfts?.chain}
+                    imageFormat={nft?.media[0].format}
+                    image={
+                      nft?.media[0]?.format === "svg+xml"
+                        ? nft.contractMetadata.openSea.collectionName ===
+                          "ENS: Ethereum Name Service"
+                          ? nft.media[0].raw
+                          : nft?.media[0]?.thumbnail
+                        : nft?.media[0]?.gateway
+                    }
+                    name={nft?.title}
+                    price={nft?.contractMetadata?.openSea?.floorPrice}
+                    tokenId={nft?.contract?.address}
+                  />
+                )
+            )
+          ) : (
+            <Text color="white" fontSize="1.5rem" mx="auto" fontWeight="bold">
+              No Nft found
+            </Text>
+          )}
+        </Flex>
+      )}
     </Box>
   );
 };
