@@ -11,16 +11,16 @@ export function ChainSelector({ setChain, ref }: ChainSelectorProps) {
   };
   return (
     <Select ref={ref} onChange={selectHandler} color="white" w="max">
-      <option color="black" defaultChecked value="eth-mainnet">
+      <option color="white" defaultChecked value="eth-mainnet">
         Ethereum
       </option>
-      <option color="black" value="matic-mainnet">
+      <option style={{ backgroundColor: "#1B1D30" }} value="matic-mainnet">
         Polygon
       </option>
-      <option color="black" value="opt-mainnet">
+      <option style={{ backgroundColor: "#1B1D30" }} value="opt-mainnet">
         Optimism
       </option>
-      <option color="black" value="arb-mainnet">
+      <option style={{ backgroundColor: "#1B1D30" }} value="arb-mainnet">
         Arbitrum
       </option>
     </Select>
