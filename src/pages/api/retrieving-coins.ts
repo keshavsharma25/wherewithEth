@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {
   getAllTokenAssets,
   getChainTokenAssets,
-  getNative
+  getNative,
 } from "../../utils/assetHelpers";
 import { chains } from "../../utils/types";
 
@@ -31,7 +31,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       tokens = await getAllTokenAssets(address as string);
 
       const result = [...native, ...tokens];
-      console.log("len of result: ", result.length);
 
       for (const token of result) {
         totalNetWorth += Number(token.quote);
