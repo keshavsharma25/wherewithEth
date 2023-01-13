@@ -8,7 +8,7 @@ export interface ICoinInnerCardProps {
   image: string | null;
   name: string;
   token_value: number;
-  incrasePercentage: number;
+  increasePercentage: number;
   quantity: number;
   value: number;
 }
@@ -18,7 +18,7 @@ export default function CoinInnerCard({
   image,
   name,
   token_value,
-  incrasePercentage,
+  increasePercentage,
   quantity,
 
   value,
@@ -75,13 +75,13 @@ export default function CoinInnerCard({
           <Flex justifyContent="center" alignItems="center" gap="2">
             <Text color="#647087">$ {token_value?.toFixed(2)}</Text>
             <Flex justifyContent="center" alignItems="center">
-              {incrasePercentage > 0 ? (
+              {increasePercentage > 0 ? (
                 <AiOutlineCaretUp color="#35DAB2" />
               ) : (
                 <AiOutlineCaretDown color="#E31C26" />
               )}
-              <Text color={incrasePercentage > 0 ? "#35DAB2" : "#E31C26"}>
-                {incrasePercentage}
+              <Text color={increasePercentage > 0 ? "#35DAB2" : "#E31C26"}>
+                {increasePercentage}
               </Text>
             </Flex>
           </Flex>
