@@ -34,16 +34,20 @@ export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
         </Flex>
         <Select
           onChange={(e) => setChain(e.target.value)}
-          color="white"
+          color={"white"}
           w="max"
         >
-          <option color="black" defaultChecked value="all">
+          <option
+            style={{ backgroundColor: "#1B1D30" }}
+            defaultChecked
+            value="all"
+          >
             All
           </option>
-          <option color="black" value="eth-mainnet">
+          <option style={{ backgroundColor: "#1B1D30" }} value="eth-mainnet">
             Ethereum
           </option>
-          <option color="black" value="matic-mainnet">
+          <option style={{ backgroundColor: "#1B1D30" }} value="matic-mainnet">
             Polygon
           </option>
         </Select>
@@ -64,8 +68,8 @@ export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
                     key={index}
                     name={user?.code}
                     image={user?.image?.png64}
-                    incrasePercentage={parseFloat(
-                      ((1 - user?.delta?.hour) * 100)?.toFixed(2)
+                    increasePercentage={parseFloat(
+                      ((user?.delta?.day - 1) * 100)?.toFixed(2)
                     )}
                     quantity={Number(
                       (
@@ -84,8 +88,8 @@ export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
                       key={index}
                       name={user?.code}
                       image={user?.image?.png64}
-                      incrasePercentage={parseFloat(
-                        ((1 - user?.delta?.day) * 100)?.toFixed(2)
+                      increasePercentage={parseFloat(
+                        ((user?.delta?.day - 1) * 100)?.toFixed(2)
                       )}
                       quantity={Number(
                         (

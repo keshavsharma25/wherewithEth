@@ -47,17 +47,21 @@ export const Transactions = ({
             w="max"
             ref={selectedTxnsType}
           >
-            <option color="black" defaultChecked value="erc20">
+            <option
+              style={{ backgroundColor: "#1B1D30" }}
+              defaultChecked
+              value="erc20"
+            >
               erc-20
             </option>
-            <option color="black" value="normal">
+            <option style={{ backgroundColor: "#1B1D30" }} value="normal">
               Normal
             </option>
 
-            <option color="black" value="erc721">
+            <option style={{ backgroundColor: "#1B1D30" }} value="erc721">
               erc-721
             </option>
-            <option color="black" value="erc1155">
+            <option style={{ backgroundColor: "#1B1D30" }} value="erc1155">
               erc-1155
             </option>
           </Select>
@@ -70,14 +74,26 @@ export const Transactions = ({
             onChange={(e) => chainHandler(e)}
             color="white"
             w="max"
-            bg="black"
           >
-            <option defaultChecked value="eth-mainnet">
+            <option
+              style={{ backgroundColor: "#1B1D30" }}
+              defaultChecked
+              value="eth-mainnet"
+            >
               Ethereum
             </option>
-            <option value="matic-mainnet">Polygon</option>
-            <option value="opt-mainnet">Optimism</option>
-            <option value="arb-mainnet">Arbitrum</option>
+            <option
+              style={{ backgroundColor: "#1B1D30" }}
+              value="matic-mainnet"
+            >
+              Polygon
+            </option>
+            <option style={{ backgroundColor: "#1B1D30" }} value="opt-mainnet">
+              Optimism
+            </option>
+            <option style={{ backgroundColor: "#1B1D30" }} value="arb-mainnet">
+              Arbitrum
+            </option>
           </Select>
           {/* <ChainSelector
             ref={selectedChainref}

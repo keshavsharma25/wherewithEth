@@ -30,7 +30,7 @@ export const getTokensPrices = async (
     "x-api-key": process.env.NEXT_PUBLIC_LIVECOINWATCH_API_KEY!,
   };
   const body = JSON.stringify({
-    codes: codes,
+    codes: codes.slice(0, 100),
     currency: currency,
     sort: sort,
     order: order,
@@ -78,7 +78,6 @@ export const getTokenPrice = async (
     code: code,
     meta: meta,
   });
-
   const options = {
     method: "POST",
     headers: headers,
