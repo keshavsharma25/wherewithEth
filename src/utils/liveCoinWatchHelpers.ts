@@ -7,6 +7,23 @@ export const getTokensPrices = async (
   limit: number = 100,
   meta: boolean = false
 ) => {
+  const result: {
+    [key: string]: {
+      rate: number;
+      volume: number;
+      cap: number;
+      liquidity?: number;
+      delta: {
+        hour: number;
+        day: number;
+        week: number;
+        month: number;
+        quarter: number;
+        year: number;
+      };
+    };
+  } = {};
+
   const url = "https://api.livecoinwatch.com/coins/map";
   const headers = {
     "content-type": "application/json",
@@ -30,31 +47,17 @@ export const getTokensPrices = async (
 
   const response = await fetch(url, options);
   const tokensPrices = await response.json();
-  const result: {
-    [key: string]: {
-      rate: number;
-      volume: number;
-      cap: number;
-      liquidity?: number;
-      delta: {
-        hour: number;
-        day: number;
-        week: number;
-        month: number;
-        quarter: number;
-        year: number;
-      };
-    };
-  } = {};
 
-  for (const item of tokensPrices) {
-    result[item.code] = {
-      rate: item.rate,
-      volume: item.volume,
-      cap: item.cap,
-      liquidity: item.liquidity,
-      delta: item.delta,
-    };
+  if (tokensPrices.length > 0) {
+    tokensPrices.map((token: any) => {
+      result[token.code] = {
+        rate: token.rate,
+        volume: token.volume,
+        cap: token.cap,
+        liquidity: token?.liquidity,
+        delta: token.delta,
+      };
+    });
   }
 
   return result;
@@ -121,12 +124,24 @@ export const getTokenContractPrice = async (
 export const getPlatformPrice = async (platform: string) => {
   switch (platform) {
     case "eth-mainnet":
-      return await getTokenPrice("ETH", "USD", true);
+      return {
+        nativePrice: await getTokenPrice("ETH", "USD", true),
+        code: "ETH",
+      };
     case "matic-mainnet":
-      return await getTokenPrice("MATIC", "USD", true);
+      return {
+        nativePrice: await getTokenPrice("MATIC", "USD", true),
+        code: "MATIC",
+      };
     case "opt-mainnet":
-      return await getTokenPrice("OP", "USD", true);
+      return {
+        nativePrice: await getTokenPrice("OP", "USD", true),
+        code: "OP",
+      };
     default:
-      return null;
+      return {
+        nativePrice: null,
+        code: null,
+      };
   }
 };
