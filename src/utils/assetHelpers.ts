@@ -52,6 +52,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               token_address: token.token_address,
               name: token.name,
               code: token.symbol,
+              chain: chain,
               decimals: token.decimals,
               balance: token.balance,
               quote: quote,
@@ -85,6 +86,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               token_address: token.token_address,
               name: token.name,
               code: token.symbol,
+              chain: chain,
               decimals: token.decimals,
               balance: token.balance,
               quote: quote,
@@ -110,9 +112,6 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
       });
       await Promise.all(promises);
     }
-
-    console.log("------------------------------------------------");
-    console.log("Result Length:  ", result.length);
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -138,6 +137,7 @@ export const getNative = async (address: string, chain: string) => {
           name: nativePrice.name,
           symbol: nativePrice.symbol,
           code: code,
+          chain: chain,
           balance: native.balance,
           decimals: allChainsDecimals[chain],
           quote: quote,
@@ -175,6 +175,7 @@ export const getNative = async (address: string, chain: string) => {
         name: nativePrice.name,
         symbol: nativePrice.symbol,
         code: code,
+        chain: chain,
         balance: native.balance,
         decimals: allChainsDecimals[chain],
         quote: quote,
