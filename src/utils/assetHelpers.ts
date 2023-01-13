@@ -52,12 +52,12 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               token_address: token.token_address,
               name: token.name,
               code: token.symbol,
+              chain: chain,
               decimals: token.decimals,
               balance: token.balance,
               quote: quote,
               ...tokenPrices[token.symbol],
               age: tokenInDb?.age,
-              color: tokenInDb?.color,
               image: {
                 png32: tokenInDb?.png32,
                 png64: tokenInDb?.png64,
@@ -85,6 +85,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               token_address: token.token_address,
               name: token.name,
               code: token.symbol,
+              chain: chain,
               decimals: token.decimals,
               balance: token.balance,
               quote: quote,
@@ -94,7 +95,6 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
               liquidity: tokenPrice?.liquidity,
               delta: tokenPrice?.delta,
               age: tokenPrice?.age,
-              color: tokenPrice?.color,
               image: {
                 png32: tokenPrice?.png32,
                 png64: tokenPrice?.png64,
@@ -110,9 +110,6 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
       });
       await Promise.all(promises);
     }
-
-    console.log("------------------------------------------------");
-    console.log("Result Length:  ", result.length);
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -138,6 +135,7 @@ export const getNative = async (address: string, chain: string) => {
           name: nativePrice.name,
           symbol: nativePrice.symbol,
           code: code,
+          chain: chain,
           balance: native.balance,
           decimals: allChainsDecimals[chain],
           quote: quote,
@@ -148,7 +146,6 @@ export const getNative = async (address: string, chain: string) => {
           delta: nativePrice.delta,
           allTimeHighUSD: nativePrice.allTimeHighUSD,
           age: nativePrice.age,
-          color: nativePrice.color,
           image: {
             png32: nativePrice.png32,
             png64: nativePrice.png64,
@@ -175,6 +172,7 @@ export const getNative = async (address: string, chain: string) => {
         name: nativePrice.name,
         symbol: nativePrice.symbol,
         code: code,
+        chain: chain,
         balance: native.balance,
         decimals: allChainsDecimals[chain],
         quote: quote,
@@ -185,7 +183,6 @@ export const getNative = async (address: string, chain: string) => {
         delta: nativePrice.delta,
         allTimeHighUSD: nativePrice.allTimeHighUSD,
         age: nativePrice.age,
-        color: nativePrice.color,
         image: {
           png32: nativePrice.png32,
           png64: nativePrice.png64,
