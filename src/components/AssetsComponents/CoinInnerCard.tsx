@@ -5,6 +5,7 @@ export interface ICoinInnerCardProps {
   address: string;
   image: string | null;
   name: string;
+  bgColor: string;
   token_value: number;
   incrasePercentage: number;
   quantity: number;
@@ -18,6 +19,7 @@ export default function CoinInnerCard({
   token_value,
   incrasePercentage,
   quantity,
+  bgColor,
   value,
 }: ICoinInnerCardProps) {
   return (
@@ -31,18 +33,26 @@ export default function CoinInnerCard({
       pb={3}
     >
       <Flex justifyContent="center" gap={3}>
-        <Box>
+        <Box boxShadow="2xl" p="3" borderRadius="full" overflow="hidden">
           {image ? (
-            <Image height="16" width="16" src={image} alt={"Logo"} />
+            <Image
+              zIndex="10"
+              height="14"
+              width="14"
+              src={image}
+              alt={"Logo"}
+            />
           ) : name === "ETH" ? (
             <Image
-              height="16"
-              width="16"
+              zIndex="10"
+              height="14"
+              width="14"
               src={`https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880`}
               alt={"Logo"}
             />
           ) : (
             <Box
+              zIndex="10"
               borderRadius="full"
               overflow="hidden"
               width="3rem"

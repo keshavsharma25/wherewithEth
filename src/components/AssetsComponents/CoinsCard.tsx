@@ -54,6 +54,7 @@ export const CoinsCard = ({ setChain }: CoinsCardProps) => {
         <Flex mt={10} direction="column" gap={5}>
           {userData?.assets?.map((user: any, index: number) => (
             <CoinInnerCard
+              bgColor={user?.color}
               address={user?.code}
               key={index}
               name={user?.code}
@@ -66,7 +67,7 @@ export const CoinsCard = ({ setChain }: CoinsCardProps) => {
                   5
                 )
               )}
-              token_value={user.quote_rate ? user.quote_rate : 0}
+              token_value={user.rate ? user.rate : 0}
               value={Number(user?.quote?.toFixed(2))}
             />
           ))}
