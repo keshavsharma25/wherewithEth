@@ -1,12 +1,12 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
-import * as React from "react";
 import { IoIosWallet } from "react-icons/io";
-
+import { Skeleton } from "@chakra-ui/react";
 export interface INetworthCardProps {
   balance: number;
+  loading: boolean;
 }
 
-export function NetworthCard({ balance }: INetworthCardProps) {
+export function NetworthCard({ balance, loading }: INetworthCardProps) {
   return (
     <Flex
       justifyContent="center"
@@ -24,9 +24,15 @@ export function NetworthCard({ balance }: INetworthCardProps) {
         <Text color="#647087" fontSize="0.8rem">
           Your Net worth
         </Text>
-        <Heading color="white" fontSize="1.5rem" fontWeight="extrabold">
-          ${balance}
-        </Heading>
+        {loading ? (
+          <Skeleton>
+            <h1>networth</h1>
+          </Skeleton>
+        ) : (
+          <Heading color="white" fontSize="1.5rem" fontWeight="extrabold">
+            ${balance}
+          </Heading>
+        )}
       </Flex>
     </Flex>
   );

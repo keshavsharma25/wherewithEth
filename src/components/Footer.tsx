@@ -26,7 +26,7 @@ export function Footer({}: IFooterProps) {
         />
         {/* <AiFillTwitterCircle fill="#979DAD" onClick={() => {}} /> */}
       </Flex>
-      <Text color="#5B647A">
+      <Text color="#5B647A" fontSize={{ base: "0.7rem", md: "1rem" }}>
         Copyright &copy; 2022 wherewithETH. All Rights Reserved
       </Text>
     </Flex>

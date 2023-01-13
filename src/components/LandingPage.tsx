@@ -19,10 +19,11 @@ export function LandingPage(props: ILandingPageProps) {
     <>
       <Flex flexDirection="column" alignItems="center" justifyContent="center">
         <Heading
-          fontSize="4rem"
+          fontSize={["1.5rem", "2.5rem", "3rem", "3.5rem", "4rem"]}
           color="white"
           textAlign={"center"}
           pt="6.75rem"
+          px={["1.5rem", "2rem", "2.5rem", "3rem", "3.5rem"]}
           pb="2.81rem"
           letterSpacing="0.2rem"
         >
@@ -30,36 +31,44 @@ export function LandingPage(props: ILandingPageProps) {
         </Heading>
         <Text
           color="#9A9AB7"
-          fontSize="1.25rem"
+          fontSize={["0.9rem", "1rem", "1.10rem", "1.25rem", "1.5rem"]}
+          px={["1.5rem", "2rem", "2.5rem", "3rem", "3.5rem"]}
           fontFamily="DM Sans"
           fontWeight="400"
+          textAlign={"center"}
         >
           Never before has it been so easy to keep track of your wallet&apos;s
           assets.
         </Text>
         <Box pt="5.5rem">
-          <AspectRatio w="64rem" h="36.5rem" ratio={4 / 3}>
+          <AspectRatio
+            w={["19.2rem", "25.6rem", "38.4rem", "51.2rem", "64rem"]}
+            h={["10.95rem", "14.6rem", "21.9rem", "29.2rem", "36.5rem"]}
+            ratio={4 / 3}
+          >
             <Image src="./mockup.png" alt="mockup" objectFit="inherit" />
           </AspectRatio>
         </Box>
+
         <Flex
           flexDirection={{
-            base: "row",
+            base: "column",
             lg: "row",
             md: "column",
           }}
-          w="74.68rem"
-          pt="15.18rem"
+          maxW="74.68rem"
+          pt={{ base: "3rem", md: "15.18rem" }}
           justifyContent="space-between"
         >
-          <Box maxW="46.625rem" w="46.625rem" pt="2.25rem" pr="4.19rem">
-            <VStack alignItems="flex-start">
-              <Flex flexDirection="row" alignItems="center" position="relative">
+          <Box pt="2.25rem">
+            <VStack alignItems={{ base: "center", lg: "flex-start" }}>
+              <Flex alignItems="center" position="relative">
                 <Image
                   src="eth.svg"
                   alt="ethlogo"
                   h="112"
                   w="112"
+                  display={{ base: "none", md: "block" }}
                   position="absolute"
                   top="-2rem"
                   left="-3rem"
@@ -68,22 +77,24 @@ export function LandingPage(props: ILandingPageProps) {
                 />
                 <Heading
                   color="white"
-                  fontSize="2rem"
+                  fontSize={{ base: "1.2rem", md: "1.5rem", lg: "1.8rem" }}
                   fontFamily=""
                   lineHeight="3rem"
-                  fontWeight="800"
+                  fontWeight="600"
                 >
                   What is wherewithETH?
                 </Heading>
               </Flex>
               <Text
                 color="#9A9AB7"
-                maxW="42.68rem"
+                maxW={{ lg: "40rem", xl: "42.68rem" }}
                 fontFamily="DM Sans"
                 fontWeight="400"
                 lineHeight="1.75rem"
-                pt="2.31rem"
+                textAlign={{ base: "center", lg: "left" }}
+                pt={{ base: "1rem", md: "2.31rem" }}
                 pb="3rem"
+                px={{ base: "10", lg: "0" }}
               >
                 WherewithEth is a platform that allows users to track and manage
                 their EVM-related assets in real time. It is inspired by the
@@ -96,15 +107,49 @@ export function LandingPage(props: ILandingPageProps) {
               <ConnectButtonCustom title="Connect Wallet" />
             </VStack>
           </Box>
-          <AspectRatio minW="25rem" minH="22.5rem">
+          <Box
+            w={{ md: "15rem", lg: "25rem", xl: "30rem" }}
+            display={{ base: "none", lg: "block" }}
+            marginX={{ md: "auto", lg: 0 }}
+          >
             <Image
+              w="full"
+              h="full"
               src="netWorthTxnNFT.png"
               alt="netWorthTxnNFT"
               objectFit="contain"
             />
-          </AspectRatio>
+          </Box>
+          <Flex
+            display={{ base: "flex", lg: "none" }}
+            mt="10"
+            flexDir="column"
+            alignItems="center"
+            justifyContent="center"
+            gap="5"
+          >
+            <Image
+              marginX="auto"
+              w={{ base: "24", md: "80" }}
+              h="full"
+              src="newWorthIcon.png"
+            />
+            <Image
+              marginX="auto"
+              w={{ base: "24", md: "80" }}
+              h="full"
+              src="NFTIcon.png"
+            />
+            <Image
+              marginX="auto"
+              w={{ base: "24", md: "80" }}
+              h="full"
+              src="TransactionIcon.png"
+            />
+          </Flex>
         </Flex>
       </Flex>
+
       {/* <Box pt="13.25rem" ml="7.5rem">
         <Heading
           fontSize="2rem"
@@ -129,3 +174,6 @@ export function LandingPage(props: ILandingPageProps) {
     </>
   );
 }
+
+//   );
+// }

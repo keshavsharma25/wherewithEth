@@ -15,16 +15,17 @@ export function Navbar(props: INavbarProps) {
         justifyContent="space-between"
         bgColor="#0C0C0D"
         height="5rem"
+        px={{ base: "1rem", md: "2rem" }}
       >
         <Flex flexDirection={"row"} alignItems={"center"}>
           <Link href="/">
-            <Img src="/eth.svg" alt="ethereum" ml={"5rem"} />
+            <Img src="/eth.svg" alt="ethereum" />
           </Link>
           <Heading size="md" fontFamily="Arial" color={"whiteAlpha.900"}>
             <Link href="/">wherewithETH</Link>
           </Heading>
         </Flex>
-        <Flex mr="5rem" alignItems="center">
+        <Flex alignItems="center">
           <ConnectButtonCustom title="Connect" />
         </Flex>
       </Flex>

@@ -1,12 +1,13 @@
-import { Box, Flex, Image, Text, Heading } from "@chakra-ui/react";
-import * as React from "react";
+import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import Identicon from "react-blockies";
+import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
+
 export interface ICoinInnerCardProps {
   address: string;
   image: string | null;
   name: string;
   token_value: number;
-  incrasePercentage: number;
+  increasePercentage: number;
   quantity: number;
   value: number;
 }
@@ -16,8 +17,9 @@ export default function CoinInnerCard({
   image,
   name,
   token_value,
-  incrasePercentage,
+  increasePercentage,
   quantity,
+
   value,
 }: ICoinInnerCardProps) {
   return (
@@ -31,18 +33,26 @@ export default function CoinInnerCard({
       pb={3}
     >
       <Flex justifyContent="center" gap={3}>
-        <Box>
+        <Box boxShadow="2xl" p="3" borderRadius="full" overflow="hidden">
           {image ? (
-            <Image height="16" width="16" src={image} alt={"Logo"} />
-          ) : name === "Ether" ? (
             <Image
-              height="16"
-              width="16"
+              zIndex="10"
+              height="14"
+              width="14"
+              src={image}
+              alt={"Logo"}
+            />
+          ) : name === "ETH" ? (
+            <Image
+              zIndex="10"
+              height="14"
+              width="14"
               src={`https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880`}
               alt={"Logo"}
             />
           ) : (
             <Box
+              zIndex="10"
               borderRadius="full"
               overflow="hidden"
               width="3rem"
@@ -63,7 +73,16 @@ export default function CoinInnerCard({
           </Heading>
           <Flex justifyContent="center" alignItems="center" gap="2">
             <Text color="#647087">$ {token_value?.toFixed(2)}</Text>
-            {/* <Text color="#35DAB2">{incrasePercentage}</Text> */}
+            <Flex justifyContent="center" alignItems="center">
+              {increasePercentage > 0 ? (
+                <AiOutlineCaretUp color="#35DAB2" />
+              ) : (
+                <AiOutlineCaretDown color="#E31C26" />
+              )}
+              <Text color={increasePercentage > 0 ? "#35DAB2" : "#E31C26"}>
+                {increasePercentage}
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
       </Flex>
