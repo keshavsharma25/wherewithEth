@@ -1,4 +1,7 @@
-import { chains } from "./types";
+import { go } from "fuzzysort";
+import { compareTwoStrings } from "string-similarity";
+import { prisma } from "./prismaClient";
+import { chains, TokenType } from "./types";
 
 export const chainUrlMapper: { [key in chains]: string } = {
   "eth-mainnet": "https://api.etherscan.io/api",
@@ -32,16 +35,41 @@ export const getCurrentBlock = async (chain: chains) => {
   return currentBlock;
 };
 
+export const fuzzyMatchTokens = async (tokens: TokenType[]) => {
+  const tokensInDB = await prisma.coins.findMany({
+    select: { code: true },
+  });
+  const tokenCodesInDB = tokensInDB.map((t) => t.code);
+  const tokensInDbList: string[] = [];
+
+  const promises = tokens.map(async (token: TokenType) => {
+    const results = go(token.symbol, tokenCodesInDB);
+    const bestResult = results[0];
+
+    if (bestResult && bestResult.score > -1) {
+      const nameInDB = await prisma.coins.findUnique({
+        where: { code: bestResult.target },
+        select: { name: true },
+      });
+
+      let nameResult;
+      if (nameInDB) {
+        nameResult = compareTwoStrings(nameInDB.name, token.name);
+      }
+
+      if (nameResult && nameResult >= 0.6) {
+        tokensInDbList.push(bestResult.target);
+      }
+    }
+  });
+
+  await Promise.all(promises);
+
+  return tokensInDbList;
+};
+
 export const allChainsDecimals: { [key in string]: number } = {
   "eth-mainnet": 18,
   "matic-mainnet": 18,
   "opt-mainnet": 18,
-};
-
-export const getQuote = async (
-  balance: string,
-  decimals: number,
-  rate: number
-) => {
-  return await ((parseInt(balance) / 10 ** decimals) * rate);
 };
