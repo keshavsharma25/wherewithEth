@@ -13,7 +13,6 @@ export const getAllTokenAssets = async (address: string) => {
   const assets = [];
   for (const chain of ["eth-mainnet", "matic-mainnet"]) {
     const chainAssets = await getChainTokenAssets(address, chain as chains);
-    console.log(chainAssets);
     assets.push(...chainAssets);
   }
 
