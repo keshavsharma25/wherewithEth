@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {
   getAllTokenAssets,
   getChainTokenAssets,
-  getNative,
+  getNative
 } from "../../utils/assetHelpers";
 import { chains } from "../../utils/types";
 

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Box, Flex, Select, Text } from "@chakra-ui/react";
-import { Spinner } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import React from "react";
 
-import { NftCard } from "./NftCard";
 import { ChainSelector } from "../ChainSelector";
+import { NftCard } from "./NftCard";
 
 interface NftBlockProps {
   userNfts: any;

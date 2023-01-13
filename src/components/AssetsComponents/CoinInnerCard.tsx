@@ -1,7 +1,6 @@
-import { Box, Flex, Image, Text, Heading } from "@chakra-ui/react";
-import * as React from "react";
+import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import Identicon from "react-blockies";
-import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
+import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 
 export interface ICoinInnerCardProps {
   address: string;

@@ -1,19 +1,17 @@
 import {
   Box,
   Flex,
+  Select,
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
-  Text,
-  Select,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useRef, useEffect } from "react";
-import { ChainSelector } from "../ChainSelector";
-import { TokenSelector } from "../TokenSelector";
+import { useRef } from "react";
 
 export const Transactions = ({
   data,

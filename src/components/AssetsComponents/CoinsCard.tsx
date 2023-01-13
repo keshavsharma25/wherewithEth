@@ -1,10 +1,9 @@
-import { Box, Flex, Heading, Select, Text } from "@chakra-ui/react";
-import React, { useContext, useRef, useEffect } from "react";
+import { Flex, Heading, Select, Spinner, Text } from "@chakra-ui/react";
+import { useContext } from "react";
 import { BsBarChartFill } from "react-icons/bs";
-import { Spinner } from "@chakra-ui/react";
 
-import CoinInnerCard from "./CoinInnerCard";
 import { userDetailContext } from "../Assets";
+import CoinInnerCard from "./CoinInnerCard";
 
 interface CoinsCardProps {
   setChain: (value: string) => void;
