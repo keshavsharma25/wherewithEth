@@ -18,6 +18,7 @@ export const userDetailContext = createContext<any | null>(null);
 export function Assets(props: IAssetsProps) {
   const [userDetails, setUserDetails] = useState<any | null>(null);
   const [userNfts, setUserNfts] = useState<any>(null);
+  const [assetChain, setAssetChain] = useState("all");
   const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
   const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
   const [transactions, setTransactions] = useState<any>(null);
@@ -28,7 +29,7 @@ export function Assets(props: IAssetsProps) {
   useEffect(() => {
     const fetchBalance = async () => {
       const res = await fetch(
-        `./api/retrieving-coins/?address=${address}&chain=eth-mainnet`
+        `./api/retrieving-coins/?address=${address}&chain=${assetChain}`
       );
       const data = await res.json();
       console.log("fetch balance is running", data);
@@ -36,7 +37,7 @@ export function Assets(props: IAssetsProps) {
       setUserDetails(data);
     };
     fetchBalance();
-  }, [address]);
+  }, [address, assetChain]);
 
   useEffect(() => {
     const fetchNfts = async () => {
@@ -78,7 +79,7 @@ export function Assets(props: IAssetsProps) {
           />
         </Flex>
         <Flex mt={10}>
-          <CoinsCard />
+          <CoinsCard setChain={(value) => setAssetChain(value)} />
         </Flex>
         <NftBlock setChain={setNftChain} userNfts={userNfts} />
         <Transactions

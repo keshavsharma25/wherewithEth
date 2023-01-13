@@ -1,14 +1,17 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Select, Text } from "@chakra-ui/react";
 import React, { useContext, useEffect } from "react";
 import { BsBarChartFill } from "react-icons/bs";
 import CoinInnerCard from "./CoinInnerCard";
 import { userDetailContext } from "../Assets";
+import { ChainSelector } from "../ChainSelector";
 
-export const CoinsCard = () => {
+interface CoinsCardProps {
+  setChain: (value: string) => void;
+}
+
+export const CoinsCard = ({ setChain }: CoinsCardProps) => {
   const userData = useContext(userDetailContext);
-  useEffect(() => {
-    console.log("User data is", userData);
-  }, [userData]);
+
   return (
     <Flex
       justifyContent="center"
@@ -20,11 +23,28 @@ export const CoinsCard = () => {
       p="2.25rem"
       borderRadius="12px"
     >
-      <Flex justifyContent="center" alignItems="center" gap="2">
-        <BsBarChartFill size="24" color="white" />{" "}
-        <Heading fontSize="1.3rem" fontWeight="bold" color="white">
-          Assets
-        </Heading>
+      <Flex justifyContent="space-between" w="full" alignItems="center">
+        <Flex justifyContent="center" alignItems="center" gap="2">
+          <BsBarChartFill size="24" color="white" />{" "}
+          <Heading fontSize="1.3rem" fontWeight="bold" color="white">
+            Assets
+          </Heading>
+        </Flex>
+        <Select
+          onChange={(e) => setChain(e.target.value)}
+          color="white"
+          w="max"
+        >
+          <option color="black" defaultChecked value="all">
+            All
+          </option>
+          <option color="black" value="eth-mainnet">
+            Ethereum
+          </option>
+          <option color="black" value="matic-mainnet">
+            Polygon
+          </option>
+        </Select>
       </Flex>
       <Flex direction="column" width="full">
         <Flex justifyContent="space-between" alignItems="center" width="full">
@@ -38,7 +58,9 @@ export const CoinsCard = () => {
               key={index}
               name={user?.code}
               image={user?.image?.png64}
-              incrasePercentage={0}
+              incrasePercentage={parseFloat(
+                ((1 - user?.delta?.hour) * 100)?.toFixed(2)
+              )}
               quantity={Number(
                 (Number(user?.balance) / Math.pow(10, user?.decimals))?.toFixed(
                   5
