@@ -17,11 +17,17 @@ export function Blockies() {
   const addressExp = address?.substring(0, 5) + ".." + address?.substring(40);
 
   return (
-    <Flex justifyContent="flex-start" alignItems="center" gap={5}>
+    <Flex
+      direction={{ base: "column", sm: "row" }}
+      justifyContent={{ base: "center", sm: "flex-start" }}
+      alignItems="center"
+      mx={{ base: "auto", sm: "0" }}
+      gap={5}
+    >
       <Box borderRadius="full" overflow="hidden" width="6.8rem" height="6.8rem">
         <Identicon seed={address! as string} size={11} scale={10} />
       </Box>
-      <Box>
+      <Box textAlign={{ base: "center", sm: "left" }}>
         <Heading color="white" fontSize="1.3rem" fontWeight="bold">
           {isLoading ? addressExp : ensName ? ensName : addressExp}
         </Heading>

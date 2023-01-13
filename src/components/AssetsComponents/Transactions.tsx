@@ -35,7 +35,7 @@ export const Transactions = ({
   };
 
   return (
-    <Box mt={6} bg="#1B1D30" p={3}>
+    <Box mt={6} bg="#1B1D30" p={3} display={{ base: "none", sm: "block" }}>
       <Flex justifyContent="space-between" alignItems="center">
         <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
           Transactions
