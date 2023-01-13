@@ -34,7 +34,7 @@ export default function CoinInnerCard({
         <Box>
           {image ? (
             <Image height="16" width="16" src={image} alt={"Logo"} />
-          ) : name === "Ether" ? (
+          ) : name === "ETH" ? (
             <Image
               height="16"
               width="16"

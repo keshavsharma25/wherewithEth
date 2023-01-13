@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Flex, Select, Text } from "@chakra-ui/react";
 import { NftCard } from "./NftCard";
+import { ChainSelector } from "../ChainSelector";
 
 interface NftBlockProps {
   userNfts: any;
@@ -8,8 +9,8 @@ interface NftBlockProps {
 }
 
 export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
-  const chainHadler = (e: any) => {
-    setChain(e.target.value);
+  const chainHandler = (value: string) => {
+    setChain(value);
   };
 
   return (
@@ -19,20 +20,7 @@ export const NftBlock: React.FC<NftBlockProps> = ({ userNfts, setChain }) => {
           Nft
         </Text>
         <Box float="right">
-          <Select onChange={(e) => chainHadler(e)} color="white" w="max">
-            <option color="black" defaultChecked value="eth-mainnet">
-              Ethereum
-            </option>
-            <option color="black" value="matic-mainnet">
-              Polygon
-            </option>
-            <option color="black" value="opt-mainnet">
-              Optimism
-            </option>
-            <option color="black" value="arb-mainnet">
-              Arbitrum
-            </option>
-          </Select>
+          <ChainSelector setChain={(value) => chainHandler(value)} />
         </Box>
       </Flex>
 

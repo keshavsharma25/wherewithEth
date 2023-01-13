@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useRef, useEffect } from "react";
+import { ChainSelector } from "../ChainSelector";
+import { TokenSelector } from "../TokenSelector";
 
 export const Transactions = ({
   data,
@@ -61,6 +63,10 @@ export const Transactions = ({
               erc-1155
             </option>
           </Select>
+          {/* <TokenSelector
+            ref={selectedTxnsType}
+            setTxnsType={(value) => txnsTypeHandler(value)}
+          /> */}
           <Select
             ref={selectedChainref}
             onChange={(e) => chainHandler(e)}
@@ -75,6 +81,10 @@ export const Transactions = ({
             <option value="opt-mainnet">Optimism</option>
             <option value="arb-mainnet">Arbitrum</option>
           </Select>
+          {/* <ChainSelector
+            ref={selectedChainref}
+            setChain={(value) => chainHandler(value)}
+          /> */}
         </Flex>
       </Flex>
       <Table bg="#1B1D30" p={2} mt={5} borderRadius="12px">

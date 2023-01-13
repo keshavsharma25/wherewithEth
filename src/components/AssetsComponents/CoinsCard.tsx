@@ -7,8 +7,8 @@ import { userDetailContext } from "../Assets";
 export const CoinsCard = () => {
   const userData = useContext(userDetailContext);
   useEffect(() => {
-    console.log("User data is", userData?.items);
-  }, [userData?.items]);
+    console.log("User data is", userData);
+  }, [userData]);
   return (
     <Flex
       justifyContent="center"
@@ -32,18 +32,20 @@ export const CoinsCard = () => {
           <Text color="#647087">QTY</Text>
         </Flex>
         <Flex mt={10} direction="column" gap={5}>
-          {userData?.items?.map((user: any, index: number) => (
+          {userData?.assets?.map((user: any, index: number) => (
             <CoinInnerCard
-              address={user.name}
+              address={user?.code}
               key={index}
-              name={user.name}
-              image={user.logo}
+              name={user?.code}
+              image={user?.image?.png64}
               incrasePercentage={0}
               quantity={Number(
-                (Number(user.balance) / Math.pow(10, user.decimals))?.toFixed(3)
+                (Number(user?.balance) / Math.pow(10, user?.decimals))?.toFixed(
+                  5
+                )
               )}
               token_value={user.quote_rate ? user.quote_rate : 0}
-              value={Number(user.quote?.toFixed(2))}
+              value={Number(user?.quote?.toFixed(2))}
             />
           ))}
         </Flex>

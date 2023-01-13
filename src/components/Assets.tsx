@@ -9,14 +9,14 @@ import {
 } from "./AssetsComponents";
 import { useAccount, useEnsName } from "wagmi";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
-import { Assets, chains } from "../utils/types";
+import { chains } from "../utils/types";
 
 export interface IAssetsProps {}
 
 export const userDetailContext = createContext<any | null>(null);
 
 export function Assets(props: IAssetsProps) {
-  const [userDetails, setUserDetails] = useState<Assets | null>(null);
+  const [userDetails, setUserDetails] = useState<any | null>(null);
   const [userNfts, setUserNfts] = useState<any>(null);
   const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
   const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
@@ -27,15 +27,13 @@ export function Assets(props: IAssetsProps) {
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await fetch(`./api/retrieving-coins/?address=${address}`);
+      const res = await fetch(
+        `./api/retrieving-coins/?address=${address}&chain=eth-mainnet`
+      );
       const data = await res.json();
-      console.log("fetch balance is running", data.total_balance);
+      console.log("fetch balance is running", data);
 
-      setUserDetails({
-        ...userDetails!,
-        total_balance: data?.total_balance,
-        items: data?.items,
-      });
+      setUserDetails(data);
     };
     fetchBalance();
   }, [address]);
@@ -62,9 +60,9 @@ export function Assets(props: IAssetsProps) {
     fetchTransactions();
   }, [txnsChain, address, txnsType]);
 
-  useEffect(() => {
-    console.log("user nfts", transactions);
-  }, [address, transactions]);
+  // useEffect(() => {
+  //   console.log("user assets", userDetails);
+  // }, [address, userDetails]);
 
   return (
     <userDetailContext.Provider value={userDetails}>
@@ -73,8 +71,8 @@ export function Assets(props: IAssetsProps) {
           <Blockies />
           <NetworthCard
             balance={
-              userDetails?.total_balance
-                ? Number(userDetails.total_balance?.toFixed(2))
+              userDetails?.networth
+                ? Number(userDetails?.networth?.toFixed(2))
                 : 0
             }
           />
