@@ -76,6 +76,7 @@ export function Assets(props: IAssetsProps) {
         <Flex justifyContent="space-between" alignItems="center">
           <Blockies />
           <NetworthCard
+            loading={assetsLoading}
             balance={
               userDetails?.networth
                 ? Number(userDetails?.networth?.toFixed(2))
