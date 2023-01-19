@@ -1,6 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { createContext, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import { useFetchAssets } from "../hooks/useFetchAssets";
+import { useFetchNfts } from "../hooks/useFetchNfts";
+import { useFetchTxns } from "../hooks/useFetchTxns";
 import { chains } from "../utils/types";
 import {
   Blockies,
@@ -15,63 +18,34 @@ export interface IAssetsProps {}
 export const userDetailContext = createContext<any | null>(null);
 
 export function Assets(props: IAssetsProps) {
-  const [userDetails, setUserDetails] = useState<any | null>(null);
-  const [userNfts, setUserNfts] = useState<any>(null);
   const [assetChain, setAssetChain] = useState("all");
-  const [assetsLoading, setAssetsLoading] = useState(false);
-  const [nftLoading, setNftLoading] = useState(false);
   const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
   const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
-  const [transactions, setTransactions] = useState<any>(null);
-  const [txnsType, setTxnsType] = useState("erc20");
+  const [txnsType, setTxnsType] = useState<string>("erc20");
 
-  const { address, isConnected } = useAccount();
+  const {
+    assets,
+    error: assetsError,
+    isLoading: assetsLoading,
+  } = useFetchAssets();
+  const {
+    nfts,
+    error: nftsError,
+    isLoading: nftsLoading,
+  } = useFetchNfts(nftChain);
 
-  useEffect(() => {
-    const fetchBalance = async () => {
-      setAssetsLoading(true);
-      const res = await fetch(
-        `./api/retrieving-coins/?address=${address}&chain=all`
-      );
-      const data = await res.json();
-      console.log("fetch balance is running", data);
+  const {
+    txns,
+    error: txnsErrror,
+    isLoading: txnsLoading,
+  } = useFetchTxns({ txnsChain, txnsType });
 
-      setUserDetails(data);
-      setAssetsLoading(false);
-    };
-    fetchBalance();
-  }, [address]);
-
-  useEffect(() => {
-    const fetchNfts = async () => {
-      setNftLoading(true);
-      const res = await fetch(
-        `./api/retrieving-nft/?address=${address}&chain=${nftChain}&pageKey=10`
-      );
-      const data = await res.json();
-      setUserNfts(data);
-      setNftLoading(false);
-    };
-    fetchNfts();
-  }, [address, nftChain]);
-
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      const res = await fetch(
-        `./api/retrieving-txns/?address=${address}&chain=${txnsChain}&page=1&limit=10&category=${txnsType}`
-      );
-      const data = await res.json();
-      setTransactions(data);
-    };
-    fetchTransactions();
-  }, [txnsChain, address, txnsType]);
-
-  useEffect(() => {
-    console.log("user assets", userDetails);
-  }, [address, userDetails]);
+  // useEffect(() => {
+  //   console.log("user metworth", networth);
+  // }, [networth]);
 
   return (
-    <userDetailContext.Provider value={userDetails}>
+    <userDetailContext.Provider value={assets}>
       <Box paddingX="2rem" pt="5rem" minHeight="100vh">
         <Flex
           direction={{ base: "column", sm: "row" }}
@@ -82,9 +56,7 @@ export function Assets(props: IAssetsProps) {
           <NetworthCard
             loading={assetsLoading}
             balance={
-              userDetails?.networth
-                ? Number(userDetails?.networth?.toFixed(2))
-                : 0
+              assets?.networth ? Number(assets?.networth?.toFixed(2)) : 0
             }
           />
         </Flex>
@@ -96,14 +68,14 @@ export function Assets(props: IAssetsProps) {
           />
         </Flex>
         <NftBlock
-          loading={nftLoading}
+          loading={nftsLoading}
           setChain={setNftChain}
-          userNfts={userNfts}
+          userNfts={nfts}
         />
         <Transactions
           setTxnsType={setTxnsType}
           setChain={setTxnsChain}
-          data={transactions?.result}
+          data={txns?.result}
         />
       </Box>
     </userDetailContext.Provider>

@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRef } from "react";
-
+import { useEns } from "../../hooks";
 export const Transactions = ({
   data,
   setChain,
@@ -35,7 +35,13 @@ export const Transactions = ({
   };
 
   return (
-    <Box mt={6} bg="#1B1D30" p={3} display={{ base: "none", sm: "block" }}>
+    <Box
+      mt={6}
+      bg="#1B1D30"
+      p={3}
+      display={{ base: "none", sm: "block" }}
+      borderRadius="12px"
+    >
       <Flex justifyContent="space-between" alignItems="center">
         <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
           Transactions
@@ -101,39 +107,35 @@ export const Transactions = ({
           /> */}
         </Flex>
       </Flex>
-      <Table bg="#1B1D30" p={2} mt={5} borderRadius="12px">
-        <Thead>
+      <Table
+        bg="#111320"
+        border="1px"
+        borderColor="rgba(255, 255, 255, 0.04)"
+        p={2}
+        mt={5}
+        borderRadius="16px"
+        overflow="hidden"
+      >
+        <Thead bg="#1B1D30" color="#647087">
           <Tr>
-            <Th fontSize="0.7rem" color="white">
-              Txn. Hash
-            </Th>
+            <Th fontSize="0.7rem">Txn. Hash</Th>
             {selectedTxnsType.current?.value === "normal" && (
-              <Th fontSize="0.7rem" color="white">
-                Method
-              </Th>
+              <Th fontSize="0.7rem">Method</Th>
             )}
-            <Th fontSize="0.7rem" color="white">
-              From
-            </Th>
-            <Th fontSize="0.7rem" color="white">
-              To
-            </Th>
+            <Th fontSize="0.7rem">From</Th>
+            <Th fontSize="0.7rem">To</Th>
             {selectedTxnsType.current?.value === "erc20" ||
             selectedTxnsType.current?.value === "normal" ? (
-              <Th fontSize="0.7rem" color="white">
-                Value
-              </Th>
+              <Th fontSize="0.7rem">Value</Th>
             ) : (
-              <Th fontSize="0.7rem" color="white">
-                Token
-              </Th>
+              <Th fontSize="0.7rem">Token</Th>
             )}
           </Tr>
         </Thead>
-        <Tbody>
+        <Tbody color="white">
           {data &&
             data?.map((item: any, index: number) => (
-              <Tr key={index} color="gray.400">
+              <Tr key={index}>
                 <Td
                   onClick={() =>
                     router.push(
@@ -148,10 +150,28 @@ export const Transactions = ({
                 </Td>
                 {selectedTxnsType.current?.value === "normal" && (
                   <Td>
-                    {item?.functionName === "" ||
-                    item?.functionName?.slice(0, 8) === "transfer"
-                      ? "Transfer"
-                      : `${item.functionName?.slice(0, 8)}...`}
+                    <Box
+                      p={1}
+                      rounded="md"
+                      textAlign="center"
+                      bg={
+                        item?.functionName?.toLowerCase().slice(0, 8) ===
+                          "transfer" || item?.functionName === ""
+                          ? "rgba(53,218,178,0.08)"
+                          : "purple.700"
+                      }
+                      color={
+                        item?.functionName?.toLowerCase().slice(0, 8) ===
+                          "transfer" || item?.functionName === ""
+                          ? "#35DAB2"
+                          : "purple.700"
+                      }
+                    >
+                      {item?.functionName === "" ||
+                      item?.functionName?.slice(0, 8) === "transfer"
+                        ? "Transfer"
+                        : `${item.functionName?.slice(0, 8)}...`}
+                    </Box>
                   </Td>
                 )}
                 <Td>{item.from.slice(0, 7)}</Td>
