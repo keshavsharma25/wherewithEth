@@ -24,25 +24,21 @@ export function Assets(props: IAssetsProps) {
   const [txnsType, setTxnsType] = useState<string>("erc20");
 
   const {
-    assets,
+    data: assets,
     error: assetsError,
     isLoading: assetsLoading,
   } = useFetchAssets();
   const {
-    nfts,
+    data: nfts,
     error: nftsError,
     isLoading: nftsLoading,
   } = useFetchNfts(nftChain);
 
   const {
-    txns,
+    data: txns,
     error: txnsErrror,
     isLoading: txnsLoading,
   } = useFetchTxns({ txnsChain, txnsType });
-
-  // useEffect(() => {
-  //   console.log("user metworth", networth);
-  // }, [networth]);
 
   return (
     <userDetailContext.Provider value={assets}>
