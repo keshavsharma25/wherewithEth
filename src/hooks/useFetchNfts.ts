@@ -1,13 +1,13 @@
 import { useAccount } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
-
+import axios from "axios";
 import { chains } from "../utils/types";
 
 const fetchNfts = async (address: `0x${string}`, nftChain: chains) => {
-  const res = await fetch(
+  const res = await axios(
     `./api/retrieving-nft/?address=${address}&chain=${nftChain}&pageKey=10`
-  );
-  return await res.json();
+  ).then((res) => res.data);
+  return res;
 };
 export const useFetchNfts = (nftChain: chains) => {
   const { address, isConnected } = useAccount();

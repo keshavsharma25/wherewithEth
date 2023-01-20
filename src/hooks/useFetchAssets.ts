@@ -4,10 +4,10 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchAssets = async (address: `0x${string}`) => {
-  const res = await fetch(
+  const res = await axios(
     `./api/retrieving-coins/?address=${address}&chain=all`
-  );
-  return await res.json();
+  ).then((res) => res.data);
+  return res;
 };
 export const useFetchAssets = () => {
   const { address, isConnected } = useAccount();

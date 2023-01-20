@@ -1,6 +1,6 @@
 import { useAccount } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
-
+import axios from "axios";
 import { chains } from "../utils/types";
 
 const fetchTxns = async (
@@ -8,10 +8,10 @@ const fetchTxns = async (
   txnsChain: chains,
   txnsType: string
 ) => {
-  const res = await fetch(
+  const res = await axios(
     `./api/retrieving-txns/?address=${address}&chain=${txnsChain}&page=1&limit=10&category=${txnsType}`
-  );
-  return await res.json();
+  ).then((res) => res.data);
+  return res;
 };
 export const useFetchTxns = ({
   txnsChain,
