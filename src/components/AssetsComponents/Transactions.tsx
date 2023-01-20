@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useEns } from "../../hooks";
+import { useAccount } from "wagmi";
 export const Transactions = ({
   data,
   setChain,
@@ -34,10 +35,11 @@ export const Transactions = ({
     setTxnsType(e.target.value);
   };
 
+  const { address, isConnected } = useAccount();
+
   return (
     <Box
       mt={6}
-      bg="#1B1D30"
       p={3}
       display={{ base: "none", sm: "block" }}
       borderRadius="12px"
@@ -109,8 +111,7 @@ export const Transactions = ({
       </Flex>
       <Table
         bg="#111320"
-        border="1px"
-        borderColor="rgba(255, 255, 255, 0.04)"
+        border="1px solid red"
         p={2}
         mt={5}
         borderRadius="16px"
@@ -132,64 +133,126 @@ export const Transactions = ({
             )}
           </Tr>
         </Thead>
-        <Tbody color="white">
+        <Tbody color="#B8B8BC">
           {data &&
-            data?.map((item: any, index: number) => (
-              <Tr key={index}>
-                <Td
-                  onClick={() =>
-                    router.push(
-                      selectedChainref.current?.value === "matic-mainnet"
-                        ? `https://polygonscan.com/tx/${item.hash}`
-                        : `https://etherscan.io/tx/${item.hash}`
-                    )
-                  }
-                  _hover={{ cursor: "pointer", color: "white" }}
-                >
-                  {item.hash.slice(0, 7)}
-                </Td>
-                {selectedTxnsType.current?.value === "normal" && (
-                  <Td>
-                    <Box
-                      p={1}
-                      rounded="md"
-                      textAlign="center"
-                      bg={
-                        item?.functionName?.toLowerCase().slice(0, 8) ===
-                          "transfer" || item?.functionName === ""
-                          ? "rgba(53,218,178,0.08)"
-                          : "purple.700"
-                      }
-                      color={
-                        item?.functionName?.toLowerCase().slice(0, 8) ===
-                          "transfer" || item?.functionName === ""
-                          ? "#35DAB2"
-                          : "purple.700"
-                      }
+            data?.map((item: any, index: number) => {
+              console.log(item.from.toLowerCase() === address?.toLowerCase());
+              return (
+                <Tr key={index}>
+                  <Td
+                    onClick={() =>
+                      router.push(
+                        selectedChainref.current?.value === "matic-mainnet"
+                          ? `https://polygonscan.com/tx/${item.hash}`
+                          : `https://etherscan.io/tx/${item.hash}`
+                      )
+                    }
+                    border="1px solid rgba(255, 255, 255, 0.03)"
+                    borderRightColor="#111320"
+                    _hover={{ cursor: "pointer", color: "white" }}
+                  >
+                    {item.hash.slice(0, 7)}
+                  </Td>
+                  {selectedTxnsType.current?.value === "normal" && (
+                    <Td
+                      borderRightColor="#111320"
+                      border="1px solid rgba(255, 255, 255, 0.03)"
                     >
-                      {item?.functionName === "" ||
-                      item?.functionName?.slice(0, 8) === "transfer"
-                        ? "Transfer"
-                        : `${item.functionName?.slice(0, 8)}...`}
-                    </Box>
+                      <Box
+                        p={1}
+                        rounded="md"
+                        textAlign="center"
+                        w="max"
+                        px="4"
+                        bg={
+                          item?.functionName?.toLowerCase().slice(0, 8) ===
+                            "transfer" || item?.functionName === ""
+                            ? "rgba(53,218,178,0.08)"
+                            : "rgba(79, 62, 224, 0.06)"
+                        }
+                        color={
+                          item?.functionName?.toLowerCase().slice(0, 8) ===
+                            "transfer" || item?.functionName === ""
+                            ? "#35DAB2"
+                            : "#9C90FF"
+                        }
+                      >
+                        {item?.functionName === "" ||
+                        item?.functionName?.slice(0, 8) === "transfer"
+                          ? "Transfer"
+                          : `${item.functionName?.slice(0, 8)}...`}
+                      </Box>
+                    </Td>
+                  )}
+                  <Td
+                    borderRightColor="#111320"
+                    border="1px solid rgba(255, 255, 255, 0.03)"
+                  >
+                    <Flex
+                      justifyContent="flex-start"
+                      w="max-content"
+                      mr="-10rem"
+                    >
+                      {item.from.slice(0, 7)}
+                      <Box
+                        ml="6rem"
+                        style={{
+                          background: `${
+                            item.from.toLowerCase() === address?.toLowerCase()
+                              ? "rgba(255, 226, 124, 0.08)"
+                              : "rgba(53, 218, 178, 0.08)"
+                          }`,
+                          color: `${
+                            item.from.toLowerCase() === address?.toLowerCase()
+                              ? "#E08849"
+                              : "#35DAB2"
+                          }`,
+                        }}
+                        rounded="md"
+                        w="4rem"
+                        textAlign="center"
+                        px={2}
+                      >
+                        {item.from.toLowerCase() === address?.toLowerCase()
+                          ? "OUT"
+                          : "IN"}
+                      </Box>
+                    </Flex>
                   </Td>
-                )}
-                <Td>{item.from.slice(0, 7)}</Td>
-                <Td>{item.to.slice(0, 7)}</Td>
-                {selectedTxnsType.current?.value === "erc20" ? (
-                  <Td>
-                    {(
-                      parseInt(item.value) /
-                      10 ** parseInt(item.tokenDecimal)
-                    )?.toFixed(2)}
+                  <Td
+                    borderRightColor="#111320"
+                    border="1px solid rgba(255, 255, 255, 0.03)"
+                  >
+                    {item.to.slice(0, 7)}
                   </Td>
-                ) : selectedTxnsType.current?.value === "normal" ? (
-                  <Td>{(parseInt(item.value) / 10 ** 18)?.toFixed(5)}</Td>
-                ) : (
-                  <Td>{item.tokenSymbol}</Td>
-                )}
-              </Tr>
-            ))}
+                  {selectedTxnsType.current?.value === "erc20" ? (
+                    <Td
+                      borderRightColor="#111320"
+                      border="1px solid rgba(255, 255, 255, 0.03)"
+                    >
+                      {(
+                        parseInt(item.value) /
+                        10 ** parseInt(item.tokenDecimal)
+                      )?.toFixed(2)}
+                    </Td>
+                  ) : selectedTxnsType.current?.value === "normal" ? (
+                    <Td
+                      borderRightColor="#111320"
+                      border="1px solid rgba(255, 255, 255, 0.03)"
+                    >
+                      {(parseInt(item.value) / 10 ** 18)?.toFixed(5)}
+                    </Td>
+                  ) : (
+                    <Td
+                      borderRightColor="#111320"
+                      border="1px solid rgba(255, 255, 255, 0.03)"
+                    >
+                      {item.tokenSymbol}
+                    </Td>
+                  )}
+                </Tr>
+              );
+            })}
         </Tbody>
       </Table>
     </Box>
