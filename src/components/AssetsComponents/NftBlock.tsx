@@ -1,5 +1,6 @@
 import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 import React from "react";
+import { FiBox } from "react-icons/fi";
 
 import { ChainSelector } from "../ChainSelector";
 import { NftCard } from "./NftCard";
@@ -20,11 +21,15 @@ export const NftBlock: React.FC<NftBlockProps> = ({
   };
 
   return (
-    <Box bg="#1B1D30" mt={10} borderRadius="12px" p={5}>
+    <Box mt={10} borderRadius="12px" p={5}>
       <Flex justifyContent="space-between" alignItems="center" mb={2}>
-        <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
-          Nft
-        </Text>
+        <Flex justifyContent="center" alignItems="center" gap={2}>
+          <FiBox color="white" size="1.5rem" />
+          <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
+            Nft
+          </Text>
+        </Flex>
+
         <Box float="right">
           <ChainSelector setChain={(value) => chainHandler(value)} />
         </Box>

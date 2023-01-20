@@ -36,11 +36,25 @@ export const NftCard = ({ image, name, price, imageFormat }: NftCardProps) => {
           />
         )}
       </Box>
-      <Flex justify="space-between" alignItems="center" p={2}>
-        <Heading fontSize="1rem" color="white">
+      <Flex
+        justifyContent="center"
+        gap={3}
+        direction="column"
+        alignItems="flex-start"
+        px={4}
+        pb={1}
+      >
+        <Heading fontSize="1.2rem" color="white">
           {name}
         </Heading>
-        <Text color="white">{price ? `${price?.toFixed(4)} ETH` : null}</Text>
+        <Box>
+          <Text color="gray.200" fontSize="0.8rem">
+            Floor Price
+          </Text>
+          <Text color="white">
+            {price ? `Ξ ${price?.toFixed(4)} ETH` : null}
+          </Text>
+        </Box>
       </Flex>
     </Box>
   );

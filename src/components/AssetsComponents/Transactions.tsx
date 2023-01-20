@@ -10,6 +10,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useEns } from "../../hooks";
@@ -45,9 +46,18 @@ export const Transactions = ({
       borderRadius="12px"
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
-          Transactions
-        </Text>
+        <Flex justifyContent="center" alignItems="center" gap={2}>
+          <Image
+            src="/vuesax/bold/card-coin.png"
+            height="5"
+            width="25"
+            alt="transactions"
+          />
+          <Text color="white" fontSize="1.2rem" fontWeight="extrabold">
+            Transactions
+          </Text>
+        </Flex>
+
         <Flex float="right" gap={5}>
           <Select
             onChange={(e) => txnsTypeHandler(e)}
