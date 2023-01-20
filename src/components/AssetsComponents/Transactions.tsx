@@ -136,7 +136,6 @@ export const Transactions = ({
         <Tbody color="#B8B8BC">
           {data &&
             data?.map((item: any, index: number) => {
-              console.log(item.from.toLowerCase() === address?.toLowerCase());
               return (
                 <Tr key={index}>
                   <Td
