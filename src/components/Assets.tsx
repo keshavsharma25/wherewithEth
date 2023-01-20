@@ -28,6 +28,7 @@ export function Assets(props: IAssetsProps) {
     error: assetsError,
     isLoading: assetsLoading,
   } = useFetchAssets();
+
   const {
     data: nfts,
     error: nftsError,
@@ -39,6 +40,12 @@ export function Assets(props: IAssetsProps) {
     error: txnsErrror,
     isLoading: txnsLoading,
   } = useFetchTxns({ txnsChain, txnsType });
+
+  useEffect(() => {
+    if (txnsLoading === false) {
+      console.log(txns);
+    }
+  }, [txns, txnsLoading]);
 
   return (
     <userDetailContext.Provider value={assets}>

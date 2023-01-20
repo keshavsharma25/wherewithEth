@@ -49,7 +49,7 @@ export const NftCard = ({ image, name, price, imageFormat }: NftCardProps) => {
         </Heading>
         <Box>
           <Text color="gray.200" fontSize="0.8rem">
-            Floor Price
+            {price && `Floor Price`}
           </Text>
           <Text color="white">
             {price ? `Ξ ${price?.toFixed(4)} ETH` : null}

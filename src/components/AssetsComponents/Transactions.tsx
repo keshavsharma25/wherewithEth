@@ -239,17 +239,27 @@ export const Transactions = ({
                       borderRightColor="#111320"
                       border="1px solid rgba(255, 255, 255, 0.03)"
                     >
-                      {(
-                        parseInt(item.value) /
-                        10 ** parseInt(item.tokenDecimal)
-                      )?.toFixed(2)}
+                      <Flex gap={4}>
+                        {parseFloat(
+                          (
+                            parseInt(item.value) /
+                            10 ** parseInt(item.tokenDecimal)
+                          )?.toFixed(5)
+                        )}
+                        {"  "}
+                        <Text>{item.tokenSymbol}</Text>
+                      </Flex>
                     </Td>
                   ) : selectedTxnsType.current?.value === "normal" ? (
                     <Td
                       borderRightColor="#111320"
                       border="1px solid rgba(255, 255, 255, 0.03)"
                     >
-                      {(parseInt(item.value) / 10 ** 18)?.toFixed(5)}
+                      {parseFloat(
+                        (parseInt(item.value) / 10 ** 18)?.toFixed(5)
+                      )}{" "}
+                      {selectedChainref?.current?.value === "eth-mainnet" &&
+                        `Ξ`}
                     </Td>
                   ) : (
                     <Td
