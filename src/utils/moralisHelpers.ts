@@ -1,3 +1,4 @@
+import axios from "axios";
 import { moralisScanMapper } from "./helpers";
 
 export const getToken = async (address: string, chain: string) => {
@@ -12,8 +13,7 @@ export const getToken = async (address: string, chain: string) => {
     },
   };
 
-  const response = await fetch(url, options);
-  const data = await response.json();
+  const { data } = await axios.get(url, options);
 
   return data;
 };

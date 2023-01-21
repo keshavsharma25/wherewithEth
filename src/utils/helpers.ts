@@ -1,3 +1,4 @@
+import axios from "axios";
 import { go } from "fuzzysort";
 import { compareTwoStrings } from "string-similarity";
 import { prisma } from "./prismaClient";
@@ -26,9 +27,9 @@ export const getCurrentBlock = async (chain: chains) => {
   const url = chainUrlMapper[chain];
 
   const apiKey = scanApiMapper[chain];
-  const currentBlockHex = await (
-    await fetch(`${url}?module=proxy&action=eth_blockNumber&apikey=${apiKey}`)
-  ).json();
+  const { data: currentBlockHex } = await axios.get(
+    `${url}?module=proxy&action=eth_blockNumber&apikey=${apiKey}`
+  );
 
   const currentBlock = parseInt(currentBlockHex.result, 16);
 
