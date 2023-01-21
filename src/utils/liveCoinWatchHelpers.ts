@@ -68,7 +68,6 @@ export const getTokensPrices = async (
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log("getTokensPrices error");
       console.log(error.response?.data);
     } else {
       console.log(error);
@@ -126,7 +125,7 @@ export const getTokenContractPrice = async (
 
   try {
     const { data } = await axios.post(url, body, options);
-    console.log("getTokenContractPrice data");
+
     console.log(data);
 
     return data;

@@ -121,8 +121,6 @@ export const getERC721Txns = async (
     headers: headers,
   };
 
-  console.log(url + "?" + params.toString());
-
   const { data } = await axios.get(url + "?" + params.toString(), options);
 
   return data;
