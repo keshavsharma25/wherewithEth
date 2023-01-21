@@ -10,6 +10,11 @@ export interface TokenType {
   balance: string;
   quote_rate?: number;
   quote?: number;
+  error?: {
+    code: number;
+    status: string;
+    description: string;
+  };
 }
 
 export interface Assets {
