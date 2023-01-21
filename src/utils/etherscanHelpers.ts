@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   chainUrlMapper,
   getCurrentBlock,
@@ -40,8 +41,7 @@ export const getNormalTxns = async (
     headers: headers,
   };
 
-  const response = await fetch(url + "?" + params.toString(), options);
-  const data = await response.json();
+  const { data } = await axios.get(url + "?" + params.toString(), options);
 
   return data;
 };
@@ -81,8 +81,7 @@ export const getERC20Txns = async (
     headers: headers,
   };
 
-  const response = await fetch(url + "?" + params.toString(), options);
-  const data = await response.json();
+  const { data } = await axios.get(url + "?" + params.toString(), options);
 
   return data;
 };
@@ -124,8 +123,7 @@ export const getERC721Txns = async (
 
   console.log(url + "?" + params.toString());
 
-  const response = await fetch(url + "?" + params.toString(), options);
-  const data = await response.json();
+  const { data } = await axios.get(url + "?" + params.toString(), options);
 
   return data;
 };
@@ -164,8 +162,7 @@ export const getERC1155Txns = async (
     headers: headers,
   };
 
-  const response = await fetch(url + "?" + params.toString(), options);
-  const data = await response.json();
+  const { data } = await axios.get(url + "?" + params.toString(), options);
 
   return data;
 };
@@ -192,8 +189,7 @@ export const getNativeBalance = async (address: string, chain: string) => {
     headers: headers,
   };
 
-  const response = await fetch(url + "?" + params.toString(), options);
-  const data = await response.json();
+  const { data } = await axios.get(url + "?" + params.toString(), options);
 
   return {
     chain: chain,
