@@ -36,7 +36,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
 
     const tokenPrices = await getTokensPrices(tokenCodesInDB);
 
-    if (tokens.length > 0 && tokenPrices) {
+    if (tokens.length > 0) {
       const promises = tokens.map(async (token: TokenType) => {
         if (tokenCodesInDB.includes(token.symbol)) {
           const tokenInDb = tokensInDB.find((t) => t.code === token.symbol);
@@ -75,7 +75,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
             platform
           );
 
-          if (!token?.error && tokenPrice.rate) {
+          if (tokenPrice.rate) {
             const quote =
               (tokenPrice.rate * parseInt(token.balance)) /
               Math.pow(10, token.decimals);
