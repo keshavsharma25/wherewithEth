@@ -43,7 +43,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
 
           if (tokenPrices[token.symbol].rate) {
             const quote = Number(
-              (tokenPrices[token.symbol]?.rate * parseInt(token.balance)) /
+              (tokenPrices[token.symbol].rate * parseInt(token.balance)) /
                 Math.pow(10, token.decimals)
             );
 
