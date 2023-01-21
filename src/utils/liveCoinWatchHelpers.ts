@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const getTokensPrices = async (
   codes: string[],
   currency: string = "USD",
@@ -42,25 +44,36 @@ export const getTokensPrices = async (
   const options = {
     method: "POST",
     headers: headers,
-    body: body,
   };
 
-  const response = await fetch(url, options);
-  const tokensPrices = await response.json();
+  try {
+    if (codes && codes.length > 0) {
+      const { data: tokensPrices } = await axios.post(url, body, options);
 
-  if (tokensPrices.length > 0) {
-    tokensPrices.map((token: any) => {
-      result[token.code] = {
-        rate: token.rate,
-        volume: token.volume,
-        cap: token.cap,
-        liquidity: token?.liquidity,
-        delta: token.delta,
-      };
-    });
+      if (tokensPrices.length > 0) {
+        tokensPrices.map((token: any) => {
+          result[token.code] = {
+            rate: token.rate,
+            volume: token.volume,
+            cap: token.cap,
+            liquidity: token?.liquidity,
+            delta: token.delta,
+          };
+        });
+      }
+
+      return result;
+    } else {
+      return result;
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("getTokensPrices error");
+      console.log(error.response?.data);
+    } else {
+      console.log(error);
+    }
   }
-
-  return result;
 };
 
 export const getTokenPrice = async (
@@ -79,13 +92,11 @@ export const getTokenPrice = async (
     meta: meta,
   });
   const options = {
-    method: "POST",
+    method: "post",
     headers: headers,
-    body: body,
   };
 
-  const response = await fetch(url, options);
-  const data = await response.json();
+  const { data } = await axios.post(url, body, options);
 
   return data;
 };
@@ -109,15 +120,23 @@ export const getTokenContractPrice = async (
   });
 
   const options = {
-    method: "POST",
+    method: "post",
     headers: headers,
-    body: body,
   };
 
-  const response = await fetch(url, options);
-  const data = await response.json();
+  try {
+    const { data } = await axios.post(url, body, options);
+    console.log("getTokenContractPrice data");
+    console.log(data);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    } else {
+      console.log(error);
+    }
+  }
 };
 
 export const getPlatformPrice = async (platform: string) => {
@@ -144,3 +163,5 @@ export const getPlatformPrice = async (platform: string) => {
       };
   }
 };
+
+export const getTokenHistory = async () => {};
