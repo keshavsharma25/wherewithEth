@@ -1,4 +1,5 @@
 import { OwnedNftsResponse } from "alchemy-sdk";
+import axios from "axios";
 import { chains, NftInformation } from "./types";
 
 export const chainAlchemyApiMapper: { [key in chains]: string } = {
@@ -34,8 +35,7 @@ export const getNfts = async (
     },
   };
 
-  const response = await fetch(URL + params, options);
-  const chainNfts: OwnedNftsResponse = await response.json();
+  const { data: chainNfts } = await axios.get(URL + params, options);
 
   return chainNfts;
 };
