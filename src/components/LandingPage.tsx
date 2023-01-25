@@ -15,6 +15,17 @@ import { ConnectButtonCustom } from "./ConnectButtonCustom";
 export interface ILandingPageProps {}
 
 export function LandingPage(props: ILandingPageProps) {
+  const landingPageImages = [
+    {
+      src: "newWorthIcon.png",
+    },
+    {
+      src: "NFTIcon.png",
+    },
+    {
+      src: "TransactionIcon.png",
+    },
+  ];
   return (
     <>
       <Flex flexDirection="column" alignItems="center" justifyContent="center">
@@ -60,7 +71,7 @@ export function LandingPage(props: ILandingPageProps) {
           pt={{ base: "3rem", md: "15.18rem" }}
           justifyContent="space-between"
         >
-          <Box pt="2.25rem">
+          <Box pt="2.25rem" mr="1.5rem">
             <VStack alignItems={{ base: "center", lg: "flex-start" }}>
               <Flex alignItems="center" position="relative">
                 <Image
@@ -87,13 +98,13 @@ export function LandingPage(props: ILandingPageProps) {
               </Flex>
               <Text
                 color="#9A9AB7"
-                maxW={{ lg: "40rem", xl: "42.68rem" }}
+                maxW={{ lg: "30rem", xl: "42.68rem" }}
                 fontFamily="DM Sans"
                 fontWeight="400"
-                lineHeight="1.75rem"
+                lineHeight={{ base: "1.75rem", lg: "1.5rem", xl: "1.75rem" }}
                 textAlign={{ base: "center", lg: "left" }}
-                pt={{ base: "1rem", md: "2.31rem" }}
-                pb="3rem"
+                pt={{ base: "1rem", lg: "1.5rem", xl: "2.31rem" }}
+                pb={{ base: "3rem", lg: "2rem", xl: "3rem" }}
                 px={{ base: "10", lg: "0" }}
               >
                 WherewithEth is a platform that allows users to track and manage
@@ -108,7 +119,7 @@ export function LandingPage(props: ILandingPageProps) {
             </VStack>
           </Box>
           <Box
-            w={{ md: "15rem", lg: "25rem", xl: "30rem" }}
+            w={{ md: "15rem", lg: "20rem", xl: "30rem" }}
             display={{ base: "none", lg: "block" }}
             marginX={{ md: "auto", lg: 0 }}
           >
@@ -128,24 +139,16 @@ export function LandingPage(props: ILandingPageProps) {
             justifyContent="center"
             gap="5"
           >
-            <Image
-              marginX="auto"
-              w={{ base: "24", md: "80" }}
-              h="full"
-              src="newWorthIcon.png"
-            />
-            <Image
-              marginX="auto"
-              w={{ base: "24", md: "80" }}
-              h="full"
-              src="NFTIcon.png"
-            />
-            <Image
-              marginX="auto"
-              w={{ base: "24", md: "80" }}
-              h="full"
-              src="TransactionIcon.png"
-            />
+            {landingPageImages.map((image, index) => (
+              <Image
+                key={index}
+                marginX="auto"
+                w={{ base: "24", lg: "80" }}
+                h="full"
+                src={image.src}
+                alt={image.src}
+              />
+            ))}
           </Flex>
         </Flex>
       </Flex>

@@ -1,4 +1,5 @@
-import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
+
 import Identicon from "react-blockies";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 
@@ -43,17 +44,21 @@ export default function CoinInnerCard({
         >
           {image ? (
             <Image
-              zIndex="10"
-              height={{ base: "10", sm: "14" }}
-              width={{ base: "10", sm: "14" }}
+              style={{
+                zIndex: 10,
+              }}
+              height={{ base: 10, sm: 14 }}
+              width={{ base: 10, sm: 14 }}
               src={image}
               alt={"Logo"}
             />
           ) : name === "ETH" ? (
             <Image
-              zIndex="10"
-              height={{ base: "10", sm: "14" }}
-              width={{ base: "10", sm: "14" }}
+              style={{
+                zIndex: 10,
+              }}
+              height={{ base: 10, sm: 14 }}
+              width={{ base: 10, sm: 14 }}
               src={`https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880`}
               alt={"Logo"}
             />
@@ -96,7 +101,7 @@ export default function CoinInnerCard({
                 fontSize={{ base: ".8rem", sm: "1rem" }}
                 color={increasePercentage > 0 ? "#35DAB2" : "#E31C26"}
               >
-                {increasePercentage}
+                {increasePercentage}%
               </Text>
             </Flex>
           </Flex>
