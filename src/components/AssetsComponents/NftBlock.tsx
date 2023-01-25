@@ -19,6 +19,24 @@ export const NftBlock: React.FC<NftBlockProps> = ({
   const chainHandler = (value: string) => {
     setChain(value);
   };
+  const options = [
+    {
+      value: "eth-mainnet",
+      label: "Ethereum",
+    },
+    {
+      value: "matic-mainnet",
+      label: "Polygon",
+    },
+    {
+      value: "opt-mainnet",
+      label: "Optimism",
+    },
+    {
+      value: "arb-mainnet",
+      label: "Arbitrum",
+    },
+  ];
 
   return (
     <Box mt={10} borderRadius="12px" p={5}>
@@ -31,7 +49,10 @@ export const NftBlock: React.FC<NftBlockProps> = ({
         </Flex>
 
         <Box float="right">
-          <ChainSelector setChain={(value) => chainHandler(value)} />
+          <ChainSelector
+            options={options}
+            setChain={(value) => chainHandler(value)}
+          />
         </Box>
       </Flex>
 

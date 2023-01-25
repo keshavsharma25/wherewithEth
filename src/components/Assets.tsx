@@ -1,6 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { createContext, useEffect, useState } from "react";
-import { useAccount } from "wagmi";
 import { useFetchAssets } from "../hooks/useFetchAssets";
 import { useFetchNfts } from "../hooks/useFetchNfts";
 import { useFetchTxns } from "../hooks/useFetchTxns";

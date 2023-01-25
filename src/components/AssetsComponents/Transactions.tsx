@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Select,
   Table,
   Tbody,
   Td,
@@ -13,8 +12,8 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useRef } from "react";
-import { useEns } from "../../hooks";
 import { useAccount } from "wagmi";
+import { ChainSelector } from "../ChainSelector";
 export const Transactions = ({
   data,
   setChain,
@@ -28,15 +27,53 @@ export const Transactions = ({
   const selectedChainref = useRef<HTMLSelectElement>(null);
   const selectedTxnsType = useRef<HTMLSelectElement>(null);
 
-  const chainHandler = (e: any) => {
-    setChain(e.target.value);
+  const chainHandler = (e: string) => {
+    setChain(e);
   };
 
-  const txnsTypeHandler = (e: any) => {
-    setTxnsType(e.target.value);
+  const txnsTypeHandler = (e: string) => {
+    setTxnsType(e);
   };
 
   const { address, isConnected } = useAccount();
+
+  const tokenOptions = [
+    {
+      value: "erc-20",
+      label: "erc-20",
+    },
+    {
+      value: "erc-721",
+      label: "erc-721",
+    },
+    {
+      value: "normal",
+      label: "normal",
+    },
+    {
+      value: "erc-1155",
+      label: "erc-1155",
+    },
+  ];
+
+  const chainOptions = [
+    {
+      value: "eth-mainnet",
+      label: "Ethereum",
+    },
+    {
+      value: "matic-mainnet",
+      label: "Polygon",
+    },
+    {
+      value: "opt-mainnet",
+      label: "Optimism",
+    },
+    {
+      value: "arb-mainnet",
+      label: "Arbitrum",
+    },
+  ];
 
   return (
     <Box
@@ -59,64 +96,17 @@ export const Transactions = ({
         </Flex>
 
         <Flex float="right" gap={5}>
-          <Select
-            onChange={(e) => txnsTypeHandler(e)}
-            color="white"
-            w="max"
+          <ChainSelector
             ref={selectedTxnsType}
-          >
-            <option
-              style={{ backgroundColor: "#1B1D30" }}
-              defaultChecked
-              value="erc20"
-            >
-              erc-20
-            </option>
-            <option style={{ backgroundColor: "#1B1D30" }} value="normal">
-              Normal
-            </option>
+            setChain={(e) => txnsTypeHandler(e)}
+            options={tokenOptions}
+          />
 
-            <option style={{ backgroundColor: "#1B1D30" }} value="erc721">
-              erc-721
-            </option>
-            <option style={{ backgroundColor: "#1B1D30" }} value="erc1155">
-              erc-1155
-            </option>
-          </Select>
-          {/* <TokenSelector
-            ref={selectedTxnsType}
-            setTxnsType={(value) => txnsTypeHandler(value)}
-          /> */}
-          <Select
-            ref={selectedChainref}
-            onChange={(e) => chainHandler(e)}
-            color="white"
-            w="max"
-          >
-            <option
-              style={{ backgroundColor: "#1B1D30" }}
-              defaultChecked
-              value="eth-mainnet"
-            >
-              Ethereum
-            </option>
-            <option
-              style={{ backgroundColor: "#1B1D30" }}
-              value="matic-mainnet"
-            >
-              Polygon
-            </option>
-            <option style={{ backgroundColor: "#1B1D30" }} value="opt-mainnet">
-              Optimism
-            </option>
-            <option style={{ backgroundColor: "#1B1D30" }} value="arb-mainnet">
-              Arbitrum
-            </option>
-          </Select>
-          {/* <ChainSelector
+          <ChainSelector
+            options={chainOptions}
             ref={selectedChainref}
             setChain={(value) => chainHandler(value)}
-          /> */}
+          />
         </Flex>
       </Flex>
       <Table

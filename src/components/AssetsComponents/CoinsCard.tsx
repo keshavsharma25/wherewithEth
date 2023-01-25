@@ -1,8 +1,9 @@
-import { Flex, Heading, Select, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Heading, Spinner, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { BsBarChartFill } from "react-icons/bs";
 
 import { userDetailContext } from "../Assets";
+import { ChainSelector } from "../ChainSelector";
 import CoinInnerCard from "./CoinInnerCard";
 
 interface CoinsCardProps {
@@ -13,6 +14,20 @@ interface CoinsCardProps {
 
 export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
   const userData = useContext(userDetailContext);
+  const options = [
+    {
+      value: "all",
+      label: "All",
+    },
+    {
+      value: "eth-mainnet",
+      label: "Ethereum",
+    },
+    {
+      value: "matic-mainnet",
+      label: "Polygon",
+    },
+  ];
 
   return (
     <Flex
@@ -32,7 +47,7 @@ export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
             Assets
           </Heading>
         </Flex>
-        <Select
+        {/* <Select
           onChange={(e) => setChain(e.target.value)}
           color={"white"}
           w="max"
@@ -50,7 +65,8 @@ export const CoinsCard = ({ setChain, chain, loading }: CoinsCardProps) => {
           <option style={{ backgroundColor: "#1B1D30" }} value="matic-mainnet">
             Polygon
           </option>
-        </Select>
+        </Select> */}
+        <ChainSelector options={options} setChain={(e) => setChain(e)} />
       </Flex>
       <Flex direction="column" width="full">
         <Flex justifyContent="space-between" alignItems="center" width="full">
