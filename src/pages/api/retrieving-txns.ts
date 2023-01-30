@@ -5,7 +5,7 @@ import {
   getERC721Txns,
   getERC1155Txns,
 } from "../../utils/etherscanHelpers";
-import { chains } from "../../utils/types";
+import { Chain } from "../../utils/types";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (category) {
       case "normal":
         const txns = await getNormalTxns(
-          chain as chains,
+          chain as Chain,
           address as string,
           parseInt(page as string) as number,
           parseInt(limit as string) as number
@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       case "erc20":
         const erc20Txns = await getERC20Txns(
-          chain as chains,
+          chain as Chain,
           address as string,
           parseInt(page as string) as number,
           parseInt(limit as string) as number
@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       case "erc721":
         const erc721Txns = await getERC721Txns(
-          chain as chains,
+          chain as Chain,
           address as string,
           parseInt(page as string) as number,
           parseInt(limit as string) as number
@@ -41,7 +41,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       case "erc1155":
         const erc1155Txns = await getERC1155Txns(
-          chain as chains,
+          chain as Chain,
           address as string,
           parseInt(page as string) as number,
           parseInt(limit as string) as number
@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       default:
         const defaultTxns = await getNormalTxns(
-          chain as chains,
+          chain as Chain,
           address as string,
           parseInt(page as string) as number,
           parseInt(limit as string) as number
