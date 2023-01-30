@@ -37,7 +37,7 @@ export interface NftInformation {
 }
 
 export interface NftType {
-  chain: chains;
+  chain: Chain;
   pageKey: string | null;
   totalCount: number;
   chainNfts: NftInformation[];
@@ -58,8 +58,19 @@ export interface nativeBalanceType {
   };
 }
 
-export type chains =
-  | "eth-mainnet"
-  | "matic-mainnet"
-  | "opt-mainnet"
-  | "arb-mainnet";
+export enum Chain {
+  eth = "eth-mainnet",
+  matic = "matic-mainnet",
+  opt = "opt-mainnet",
+  arb = "arb-mainnet",
+}
+
+export enum timePeriod {
+  oneHour = "1h",
+  oneDay = "1d",
+  sevenDays = "7d",
+  thirtyDays = "30d",
+  sixMonths = "6m",
+  oneYear = "1y",
+  max = "max",
+}

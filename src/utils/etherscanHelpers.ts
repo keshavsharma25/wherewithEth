@@ -1,14 +1,15 @@
 import axios from "axios";
+import { getContractAddress } from "ethers/lib/utils.js";
 import {
   chainUrlMapper,
   getCurrentBlock,
   moralisScanMapper,
   scanApiMapper,
 } from "./helpers";
-import { chains } from "./types";
+import { Chain } from "./types";
 
 export const getNormalTxns = async (
-  chain: chains,
+  chain: Chain,
   address: string,
   page: number,
   offset: number
@@ -47,10 +48,11 @@ export const getNormalTxns = async (
 };
 
 export const getERC20Txns = async (
-  chain: chains,
+  chain: Chain,
   address: string,
   page: number,
-  offset: number
+  offset: number,
+  contractAddress?: string
 ) => {
   const apiKey = scanApiMapper[chain];
   const currentBlock = await getCurrentBlock(chain);
@@ -61,6 +63,9 @@ export const getERC20Txns = async (
   params.append("module", "account");
   params.append("action", "tokentx");
   params.append("address", address);
+  if (contractAddress) {
+    params.append("contractaddress", contractAddress);
+  }
   params.append("startblock", "0");
   params.append(
     "endblock",
@@ -87,7 +92,7 @@ export const getERC20Txns = async (
 };
 
 export const getERC721Txns = async (
-  chain: chains,
+  chain: Chain,
   address: string,
   page: number,
   offset: number
@@ -127,7 +132,7 @@ export const getERC721Txns = async (
 };
 
 export const getERC1155Txns = async (
-  chain: chains,
+  chain: Chain,
   address: string,
   page: number,
   offset: number
@@ -166,8 +171,8 @@ export const getERC1155Txns = async (
 };
 
 export const getNativeBalance = async (address: string, chain: string) => {
-  const url = chainUrlMapper[chain as chains];
-  const apiKey = scanApiMapper[chain as chains];
+  const url = chainUrlMapper[chain as Chain];
+  const apiKey = scanApiMapper[chain as Chain];
 
   const params = new URLSearchParams();
 
