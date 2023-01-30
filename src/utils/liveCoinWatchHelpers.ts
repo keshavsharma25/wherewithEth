@@ -1,4 +1,6 @@
 import axios from "axios";
+import { dateIntervals } from "./helpers";
+import { timePeriod } from "./types";
 
 export const getTokensPrices = async (
   codes: string[],
@@ -163,4 +165,32 @@ export const getPlatformPrice = async (platform: string) => {
   }
 };
 
-export const getTokenHistory = async () => {};
+export const getTokenHistory = async (
+  code: string,
+  interval: timePeriod,
+  currency: string = "USD",
+  meta: boolean = false
+) => {
+  const { start, end } = dateIntervals(interval);
+
+  const url = "https://api.livecoinwatch.com/coins/single/history";
+  const headers = {
+    "content-type": "application/json",
+    "x-api-key": process.env.NEXT_PUBLIC_LIVECOINWATCH_API_KEY!,
+  };
+  const body = JSON.stringify({
+    currency: currency,
+    code: code,
+    start: start,
+    end: end,
+    meta: meta,
+  });
+  const options = {
+    method: "post",
+    headers: headers,
+  };
+
+  const { data } = await axios.post(url, body, options);
+
+  return data;
+};
