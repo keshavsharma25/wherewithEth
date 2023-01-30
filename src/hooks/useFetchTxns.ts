@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { chains } from "../utils/types";
+import { Chain as chains } from "../utils/types";
 
 const fetchTxns = async (
   address: `0x${string}`,
