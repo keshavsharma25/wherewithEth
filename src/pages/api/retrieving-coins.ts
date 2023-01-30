@@ -5,7 +5,7 @@ import {
   getChainTokenAssets,
   getNative,
 } from "../../utils/assetHelpers";
-import { chains } from "../../utils/types";
+import { Chain as chains } from "../../utils/types";
 import redis from "../../utils/redis";
 
 const start = async () => {

@@ -1,6 +1,6 @@
 import { OwnedNftsResponse } from "alchemy-sdk";
 import axios from "axios";
-import { chains, NftInformation } from "./types";
+import { Chain as chains, NftInformation } from "./types";
 
 export const chainAlchemyApiMapper: { [key in chains]: string } = {
   "eth-mainnet": process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_API_KEY as string,

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getNfts, chainAlchemyApiMapper } from "../../utils/alchemyHelpers";
-import { chains, NftInformation, NftType } from "../../utils/types";
+import { Chain as chains, NftInformation, NftType } from "../../utils/types";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { address, chain, pageKey } = req.query;
