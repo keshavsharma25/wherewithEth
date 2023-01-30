@@ -1,11 +1,12 @@
 import { Select } from "@chakra-ui/react";
+import { Chain as chains } from "../utils/types";
 
 type optionType = {
   value: string;
   label: string;
 };
 interface ChainSelectorProps {
-  setChain: (value: string) => void;
+  setChain: (value: chains) => void;
   ref?: React.LegacyRef<HTMLSelectElement>;
   options: optionType[];
 }

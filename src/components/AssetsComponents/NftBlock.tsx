@@ -4,32 +4,33 @@ import { FiBox } from "react-icons/fi";
 
 import { ChainSelector } from "../ChainSelector";
 import { NftCard } from "./NftCard";
+import { Chain as chains } from "../../utils/types";
 
 interface NftBlockProps {
   userNfts: any;
-  setChain: any;
+  setChain: (value: chains) => void;
   loading: boolean;
 }
 
 const NftBlock = ({ userNfts, setChain, loading }: NftBlockProps) => {
-  const chainHandler = (value: string) => {
+  const chainHandler = (value: chains) => {
     setChain(value);
   };
   const options = [
     {
-      value: "eth-mainnet",
+      value: chains.eth,
       label: "Ethereum",
     },
     {
-      value: "matic-mainnet",
+      value: chains.matic,
       label: "Polygon",
     },
     {
-      value: "opt-mainnet",
+      value: chains.opt,
       label: "Optimism",
     },
     {
-      value: "arb-mainnet",
+      value: chains.arb,
       label: "Arbitrum",
     },
   ];

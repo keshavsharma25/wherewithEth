@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { useFetchAssets } from "../hooks/useFetchAssets";
 import { useFetchNfts } from "../hooks/useFetchNfts";
 import { useFetchTxns } from "../hooks/useFetchTxns";
-import { chains } from "../utils/types";
+import { Chain as chains } from "../utils/types";
 import {
   Blockies,
   NetworthCardMemoed as NetworthCard,
@@ -18,8 +18,8 @@ export const userDetailContext = createContext<any | null>(null);
 
 export function Assets(props: IAssetsProps) {
   const [assetChain, setAssetChain] = useState("all");
-  const [nftChain, setNftChain] = useState<chains>("eth-mainnet");
-  const [txnsChain, setTxnsChain] = useState<chains>("eth-mainnet");
+  const [nftChain, setNftChain] = useState<chains>(chains.eth);
+  const [txnsChain, setTxnsChain] = useState<chains>(chains.eth);
   const [txnsType, setTxnsType] = useState<string>("erc20");
 
   const {
@@ -39,12 +39,6 @@ export function Assets(props: IAssetsProps) {
     error: txnsErrror,
     isLoading: txnsLoading,
   } = useFetchTxns({ txnsChain, txnsType });
-
-  useEffect(() => {
-    if (txnsLoading === false) {
-      console.log(txns);
-    }
-  }, [txns, txnsLoading]);
 
   return (
     <userDetailContext.Provider value={assets}>

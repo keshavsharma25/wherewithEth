@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { useAccount } from "wagmi";
+import { Chain as chains } from "../../utils/types";
 import { ChainSelector } from "../ChainSelector";
 const Transactions = ({
   data,
@@ -20,14 +21,14 @@ const Transactions = ({
   setTxnsType,
 }: {
   data: any;
-  setChain: (e: any) => void;
+  setChain: (e: chains) => void;
   setTxnsType: (e: any) => void;
 }) => {
   const router = useRouter();
   const selectedChainref = useRef<HTMLSelectElement>(null);
   const selectedTxnsType = useRef<HTMLSelectElement>(null);
 
-  const chainHandler = (e: string) => {
+  const chainHandler = (e: chains) => {
     setChain(e);
   };
 
@@ -58,19 +59,19 @@ const Transactions = ({
 
   const chainOptions = [
     {
-      value: "eth-mainnet",
+      value: chains.eth,
       label: "Ethereum",
     },
     {
-      value: "matic-mainnet",
+      value: chains.matic,
       label: "Polygon",
     },
     {
-      value: "opt-mainnet",
+      value: chains.opt,
       label: "Optimism",
     },
     {
-      value: "arb-mainnet",
+      value: chains.arb,
       label: "Arbitrum",
     },
   ];
