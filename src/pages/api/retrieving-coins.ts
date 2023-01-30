@@ -6,6 +6,7 @@ import {
   getNative,
 } from "../../utils/assetHelpers";
 import { chains } from "../../utils/types";
+import redis from "../../utils/redis";
 
 const start = async () => {
   try {
@@ -27,37 +28,67 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let totalNetWorth = 0;
 
     if (chain === "all") {
-      native = await getNative(address as string, chain as chains);
-      tokens = await getAllTokenAssets(address as string);
+      let allCoins = JSON.parse(
+        (await redis.get(`allCoins-${address}`)) as string
+      );
 
-      const result = [...native, ...tokens];
+      if (!allCoins) {
+        native = await getNative(address as string, chain as chains);
+        tokens = await getAllTokenAssets(address as string);
 
-      for (const token of result) {
-        totalNetWorth += Number(token.quote);
+        const result = [...native, ...tokens];
+
+        for (const token of result) {
+          totalNetWorth += Number(token.quote);
+        }
+
+        allCoins = {
+          address: address as string,
+          chain: chain as chains,
+          networth: totalNetWorth,
+          assets: result,
+        };
+
+        await redis.set(
+          `allCoins-${address}`,
+          JSON.stringify(allCoins),
+          "EX",
+          60 * 15
+        );
       }
 
-      res.status(200).json({
-        address: address as string,
-        chain: chain as chains,
-        networth: totalNetWorth,
-        assets: result,
-      });
+      res.status(200).json(allCoins);
     } else {
-      native = await getNative(address as string, chain as chains);
-      tokens = await getChainTokenAssets(address as string, chain as chains);
+      let chainCoins = JSON.parse(
+        (await redis.get(`${chain}Coins-${address}`)) as string
+      );
 
-      const result = [...native, ...tokens];
+      if (!chainCoins) {
+        native = await getNative(address as string, chain as chains);
+        tokens = await getChainTokenAssets(address as string, chain as chains);
 
-      for (const token of result) {
-        totalNetWorth += Number(token.quote);
+        const result = [...native, ...tokens];
+
+        for (const token of result) {
+          totalNetWorth += Number(token.quote);
+        }
+
+        chainCoins = {
+          address: address as string,
+          chain: chain as chains,
+          networth: totalNetWorth,
+          assets: result,
+        };
+
+        await redis.set(
+          `${chain}Coins-${address}`,
+          JSON.stringify(chainCoins),
+          "EX",
+          60 * 15
+        );
       }
 
-      res.status(200).json({
-        address: address as string,
-        chain: chain as chains,
-        networth: totalNetWorth,
-        assets: result,
-      });
+      res.status(200).json(chainCoins);
     }
   } catch (error) {
     if (error instanceof Error) {
