@@ -12,6 +12,7 @@ interface NftCardProps {
 }
 
 export const NftCard = ({ image, name, price, imageFormat }: NftCardProps) => {
+  console.log("Nft card redererd");
   return (
     <Box
       bg="#1D1F37"
