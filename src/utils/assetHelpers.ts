@@ -7,12 +7,12 @@ import {
   getTokensPrices,
 } from "./liveCoinWatchHelpers";
 import { getToken } from "./moralisHelpers";
-import { chains, TokenType } from "./types";
+import { Chain, TokenType } from "./types";
 
 export const getAllTokenAssets = async (address: string) => {
   const assets = [];
   for (const chain of ["eth-mainnet", "matic-mainnet"]) {
-    const chainAssets = await getChainTokenAssets(address, chain as chains);
+    const chainAssets = await getChainTokenAssets(address, chain as Chain);
     assets.push(...chainAssets);
   }
 
@@ -25,7 +25,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
   const result: any = [];
 
   try {
-    const tokenCodesInDB = await fuzzyMatchTokens(tokens);
+    const { tokenNamesInDb: tokenCodesInDB } = await fuzzyMatchTokens(tokens);
     const tokensInDB = await prisma.coins.findMany({
       where: {
         code: {
@@ -75,7 +75,7 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
             platform
           );
 
-          if (!token?.error && tokenPrice.rate) {
+          if (!tokenPrice?.error && tokenPrice.rate) {
             const quote =
               (tokenPrice.rate * parseInt(token.balance)) /
               Math.pow(10, token.decimals);
@@ -158,8 +158,8 @@ export const getNative = async (address: string, chain: string) => {
       }
     }
   } else {
-    const native = await getNativeBalance(address, chain as chains);
-    const { nativePrice, code } = await getPlatformPrice(chain as chains);
+    const native = await getNativeBalance(address, chain as Chain);
+    const { nativePrice, code } = await getPlatformPrice(chain as Chain);
 
     const quote = Number(
       (nativePrice.rate * parseInt(native.balance)) /
@@ -197,3 +197,5 @@ export const getNative = async (address: string, chain: string) => {
 
   return result;
 };
+
+export const getHistory = async (address: string) => {};
