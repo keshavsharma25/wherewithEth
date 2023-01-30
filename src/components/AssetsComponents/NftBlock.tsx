@@ -11,11 +11,7 @@ interface NftBlockProps {
   loading: boolean;
 }
 
-export const NftBlock: React.FC<NftBlockProps> = ({
-  userNfts,
-  setChain,
-  loading,
-}) => {
+const NftBlock = ({ userNfts, setChain, loading }: NftBlockProps) => {
   const chainHandler = (value: string) => {
     setChain(value);
   };
@@ -110,3 +106,5 @@ export const NftBlock: React.FC<NftBlockProps> = ({
     </Box>
   );
 };
+
+export const NftBlockMemo = React.memo(NftBlock);

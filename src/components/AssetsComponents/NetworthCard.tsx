@@ -1,3 +1,4 @@
+import React from "react";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { IoIosWallet } from "react-icons/io";
 import { Skeleton } from "@chakra-ui/react";
@@ -6,7 +7,7 @@ export interface INetworthCardProps {
   loading: boolean;
 }
 
-export function NetworthCard({ balance, loading }: INetworthCardProps) {
+function NetworthCard({ balance, loading }: INetworthCardProps) {
   return (
     <Flex
       justifyContent="center"
@@ -37,3 +38,5 @@ export function NetworthCard({ balance, loading }: INetworthCardProps) {
     </Flex>
   );
 }
+
+export const NetworthCardMemoed = React.memo(NetworthCard);

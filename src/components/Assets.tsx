@@ -6,9 +6,9 @@ import { useFetchTxns } from "../hooks/useFetchTxns";
 import { chains } from "../utils/types";
 import {
   Blockies,
-  NetworthCard,
-  NftBlock,
-  Transactions,
+  NetworthCardMemoed as NetworthCard,
+  NftBlockMemo as NftBlock,
+  TransactionMemo as Transactions,
 } from "./AssetsComponents";
 import { CoinsCard } from "./AssetsComponents/CoinsCard";
 

@@ -11,10 +11,10 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useAccount } from "wagmi";
 import { ChainSelector } from "../ChainSelector";
-export const Transactions = ({
+const Transactions = ({
   data,
   setChain,
   setTxnsType,
@@ -267,3 +267,5 @@ export const Transactions = ({
     </Box>
   );
 };
+
+export const TransactionMemo = React.memo(Transactions);
