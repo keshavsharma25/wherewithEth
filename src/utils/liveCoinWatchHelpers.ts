@@ -154,8 +154,8 @@ export const getPlatformPrice = async (platform: string) => {
       };
     case "opt-mainnet":
       return {
-        nativePrice: await getTokenPrice("OP", "USD", true),
-        code: "OP",
+        nativePrice: await getTokenPrice("ETH", "USD", true),
+        code: "ETH OP",
       };
     default:
       return {
