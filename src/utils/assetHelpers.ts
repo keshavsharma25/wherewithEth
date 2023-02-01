@@ -1,13 +1,15 @@
 import { prisma } from "../utils/prismaClient";
-import { getNativeBalance } from "./etherscanHelpers";
-import { allChainsDecimals, fuzzyMatchTokens } from "./helpers";
+import { getERC20Txns, getNativeBalance } from "./etherscanHelpers";
+import { allChainsDecimals, dateIntervals, fuzzyMatchTokens } from "./helpers";
 import {
   getPlatformPrice,
   getTokenContractPrice,
   getTokensPrices,
 } from "./liveCoinWatchHelpers";
 import { getToken } from "./moralisHelpers";
-import { Chain, TokenType } from "./types";
+import { Chain, timePeriod, TokenType } from "./types";
+import BigNumber from "bignumber.js";
+import date from "moment";
 
 export const getAllTokenAssets = async (address: string) => {
   const assets = [];
@@ -25,20 +27,24 @@ export const getChainTokenAssets = async (address: string, chain: string) => {
   const result: any = [];
 
   try {
-    const { tokenNamesInDb: tokenCodesInDB } = await fuzzyMatchTokens(tokens);
+    const {
+      tokenCodesInDbLCW,
+      tokenCodesInDbMoralis,
+      tokenCodesNotInDbMoralis,
+    } = await fuzzyMatchTokens(tokens);
     const tokensInDB = await prisma.coins.findMany({
       where: {
         code: {
-          in: tokenCodesInDB,
+          in: tokenCodesInDbLCW,
         },
       },
     });
 
-    const tokenPrices = await getTokensPrices(tokenCodesInDB);
+    const tokenPrices = await getTokensPrices(tokenCodesInDbLCW);
 
     if (tokens.length > 0 && tokenPrices) {
       const promises = tokens.map(async (token: TokenType) => {
-        if (tokenCodesInDB.includes(token.symbol)) {
+        if (tokenCodesInDbLCW.includes(token.symbol)) {
           const tokenInDb = tokensInDB.find((t) => t.code === token.symbol);
 
           if (tokenPrices[token.symbol].rate) {
@@ -198,4 +204,119 @@ export const getNative = async (address: string, chain: string) => {
   return result;
 };
 
-export const getHistory = async (address: string) => {};
+export const tokenBalanceHistory = async (
+  address: string,
+  tokenInfo: TokenType,
+  chain: Chain,
+  interval: timePeriod
+) => {
+  const { start, end } = dateIntervals(interval);
+
+  const startSec = Math.round(start / 1000);
+  const endSec = Math.round(end / 1000);
+
+  let page = 1;
+
+  const txHistory = await getERC20Txns(
+    chain,
+    address,
+    page,
+    100,
+    tokenInfo.token_address
+  );
+
+  if (txHistory.status === "1") {
+    const txHistoryFilter = txHistory?.result?.filter(
+      (tx: any) => tx.timeStamp >= startSec && tx.timeStamp <= endSec
+    );
+
+    const txList = [...txHistoryFilter];
+
+    let currentBalance = new BigNumber(tokenInfo?.balance);
+
+    const currentTokenBalance = {
+      timestamp: Math.round(date.now() / 1000),
+      balance: currentBalance.toString(),
+      status: "current",
+    };
+
+    if (txList.length === 0) {
+      return {
+        token: tokenInfo?.symbol,
+        token_address: tokenInfo?.token_address,
+        chain: chain,
+        decimals: tokenInfo?.decimals,
+        balanceHistory: [currentTokenBalance],
+      };
+    }
+
+    while (txList.length > 0 && txList.length % 100 === 0) {
+      page += 1;
+      const txHistory = await getERC20Txns(
+        Chain.eth,
+        address,
+        page,
+        100,
+        tokenInfo.token_address
+      );
+
+      const txHistoryFilter = txHistory?.result.filter(
+        (tx: any) => tx.timeStamp >= startSec && tx.timeStamp <= endSec
+      );
+
+      if (txHistory?.status === "0") {
+        break;
+      }
+
+      txList.push(...txHistoryFilter);
+    }
+
+    const promises = txList.map((tx: any) => {
+      const { timeStamp, from, to, value } = tx;
+
+      if (from.toLowerCase() === address.toLowerCase()) {
+        currentBalance = currentBalance.plus(value);
+
+        return {
+          timestamp: timeStamp - 1,
+          balance: currentBalance.toString(),
+          status: "send",
+          amount: value.toString(),
+          gasUsed: tx.gasUsed,
+          gasPrice: tx.gasPrice,
+        };
+      } else if (to.toLowerCase() === address.toLowerCase()) {
+        currentBalance = currentBalance.minus(value);
+        return {
+          timestamp: timeStamp - 1,
+          balance: currentBalance.toString(),
+          status: "receive",
+          amount: value.toString(),
+          gasUsed: tx.gasUsed,
+          gasPrice: tx.gasPrice,
+        };
+      }
+    });
+
+    const txBalanceHistory = await Promise.all(promises);
+
+    const tokenBalanceHistory = [currentTokenBalance, ...txBalanceHistory];
+
+    return {
+      token: tokenInfo?.symbol,
+      token_address: tokenInfo?.token_address,
+      chain: chain,
+      decimals: tokenInfo?.decimals,
+      balanceHistory: tokenBalanceHistory,
+    };
+  } else {
+    console.log("error", txHistory);
+    return {
+      token: tokenInfo?.symbol,
+      token_address: tokenInfo?.token_address,
+      chain: chain,
+      decimals: tokenInfo?.decimals,
+      balanceHistory: [],
+    };
+  }
+};
