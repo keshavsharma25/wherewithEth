@@ -72,5 +72,4 @@ export enum timePeriod {
   thirtyDays = "30d",
   sixMonths = "6m",
   oneYear = "1y",
-  max = "max",
 }
