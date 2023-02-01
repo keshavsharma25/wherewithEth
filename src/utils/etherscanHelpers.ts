@@ -1,9 +1,13 @@
-import axios from "axios";
-import { getContractAddress } from "ethers/lib/utils.js";
+import axios, {
+  AxiosRequestConfig,
+  AxiosRequestHeaders,
+  RawAxiosRequestHeaders,
+} from "axios";
+import rateLimitedAxios from "./axiosRateLimit";
 import {
   chainUrlMapper,
   getCurrentBlock,
-  moralisScanMapper,
+  getRandomApiKey,
   scanApiMapper,
 } from "./helpers";
 import { Chain } from "./types";
@@ -14,7 +18,7 @@ export const getNormalTxns = async (
   page: number,
   offset: number
 ) => {
-  const apiKey = scanApiMapper[chain];
+  const apiKey = getRandomApiKey(scanApiMapper[chain]);
   const currentBlock = await getCurrentBlock(chain);
   const url = chainUrlMapper[chain];
 
@@ -32,19 +36,25 @@ export const getNormalTxns = async (
   params.append("sort", "desc");
   params.append("apikey", apiKey as string);
 
-  const headers = {
+  interface AxiosHeaders extends RawAxiosRequestHeaders {
+    accept: string;
+    "Content-Type": string;
+  }
+
+  const headers: AxiosHeaders = {
     accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  const options = {
+  const config: AxiosRequestConfig = {
+    url: url + "?" + params.toString(),
     method: "GET",
     headers: headers,
   };
 
-  const { data } = await axios.get(url + "?" + params.toString(), options);
+  const response = await rateLimitedAxios(config);
 
-  return data;
+  return response.data;
 };
 
 export const getERC20Txns = async (
@@ -54,7 +64,7 @@ export const getERC20Txns = async (
   offset: number,
   contractAddress?: string
 ) => {
-  const apiKey = scanApiMapper[chain];
+  const apiKey = getRandomApiKey(scanApiMapper[chain]);
   const currentBlock = await getCurrentBlock(chain);
   const url = chainUrlMapper[chain];
 
@@ -76,19 +86,25 @@ export const getERC20Txns = async (
   params.append("sort", "desc");
   params.append("apikey", apiKey as string);
 
-  const headers = {
+  interface AxiosHeaders extends RawAxiosRequestHeaders {
+    accept: string;
+    "Content-Type": string;
+  }
+
+  const headers: AxiosHeaders = {
     accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  const options = {
+  const config: AxiosRequestConfig = {
+    url: url + "?" + params.toString(),
     method: "GET",
     headers: headers,
   };
 
-  const { data } = await axios.get(url + "?" + params.toString(), options);
+  const response = await rateLimitedAxios(config);
 
-  return data;
+  return response?.data;
 };
 
 export const getERC721Txns = async (
@@ -97,7 +113,7 @@ export const getERC721Txns = async (
   page: number,
   offset: number
 ) => {
-  const apiKey = scanApiMapper[chain];
+  const apiKey = getRandomApiKey(scanApiMapper[chain]);
   const currentBlock = await getCurrentBlock(chain);
   const url = chainUrlMapper[chain];
 
@@ -116,19 +132,25 @@ export const getERC721Txns = async (
   params.append("sort", "desc");
   params.append("apikey", apiKey as string);
 
-  const headers = {
+  interface AxiosHeaders extends RawAxiosRequestHeaders {
+    accept: string;
+    "Content-Type": string;
+  }
+
+  const headers: AxiosHeaders = {
     accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  const options = {
+  const config: AxiosRequestConfig = {
+    url: url + "?" + params.toString(),
     method: "GET",
     headers: headers,
   };
 
-  const { data } = await axios.get(url + "?" + params.toString(), options);
+  const response = await rateLimitedAxios(config);
 
-  return data;
+  return response.data;
 };
 
 export const getERC1155Txns = async (
@@ -137,7 +159,7 @@ export const getERC1155Txns = async (
   page: number,
   offset: number
 ) => {
-  const apiKey = scanApiMapper[chain];
+  const apiKey = getRandomApiKey(scanApiMapper[chain]);
   const currentBlock = await getCurrentBlock(chain);
   const url = chainUrlMapper[chain];
 
@@ -155,24 +177,30 @@ export const getERC1155Txns = async (
   params.append("sort", "desc");
   params.append("apikey", apiKey as string);
 
-  const headers = {
+  interface AxiosHeaders extends RawAxiosRequestHeaders {
+    accept: string;
+    "Content-Type": string;
+  }
+
+  const headers: AxiosHeaders = {
     accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  const options = {
+  const config: AxiosRequestConfig = {
+    url: url + "?" + params.toString(),
     method: "GET",
     headers: headers,
   };
 
-  const { data } = await axios.get(url + "?" + params.toString(), options);
+  const response = await rateLimitedAxios(config);
 
-  return data;
+  return response.data;
 };
 
-export const getNativeBalance = async (address: string, chain: string) => {
-  const url = chainUrlMapper[chain as Chain];
-  const apiKey = scanApiMapper[chain as Chain];
+export const getNativeBalance = async (address: string, chain: Chain) => {
+  const url = chainUrlMapper[chain];
+  const apiKey = getRandomApiKey(scanApiMapper[chain]);
 
   const params = new URLSearchParams();
 
@@ -182,22 +210,27 @@ export const getNativeBalance = async (address: string, chain: string) => {
   params.append("tag", "latest");
   params.append("apikey", apiKey);
 
-  const headers = {
+  interface AxiosHeaders extends RawAxiosRequestHeaders {
+    accept: string;
+    "Content-Type": string;
+  }
+
+  const headers: AxiosHeaders = {
     accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  const options = {
+  const config: AxiosRequestConfig = {
+    url: url + "?" + params.toString(),
     method: "GET",
     headers: headers,
   };
 
-  const { data } = await axios.get(url + "?" + params.toString(), options);
-
+  const response = await rateLimitedAxios(config);
   return {
     chain: chain,
     address: address,
-    status: data.status,
-    balance: data.result,
+    status: response.data.status,
+    balance: response.data.result,
   };
 };
