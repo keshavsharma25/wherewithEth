@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import Identicon from "react-blockies";
+import { VyktProfile } from "vykt-sdk";
 import { useAccount, useEnsName } from "wagmi";
 
 export interface IBlockiesProps {
@@ -24,8 +24,8 @@ export function Blockies() {
       mx={{ base: "auto", sm: "0" }}
       gap={5}
     >
-      <Box borderRadius="full" overflow="hidden" width="6.8rem" height="6.8rem">
-        <Identicon seed={address! as string} size={11} scale={10} />
+      <Box>
+        <VyktProfile address={address!} size="md" type="square" />
       </Box>
       <Box textAlign={{ base: "center", sm: "left" }}>
         <Heading color="white" fontSize="1.3rem" fontWeight="bold">
